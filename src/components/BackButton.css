@@ -1,0 +1,7 @@
+.backButton {
+    position: absolute;
+    margin-top: 52px;
+    margin-left: 45px;
+    cursor: pointer;
+    z-index: 1;
+}

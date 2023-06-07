@@ -1,0 +1,20 @@
+.button-footer {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+}
+
+.button-img {
+    height: 65px;
+}
+
+.button-img-active {
+    background: #AFDBC7;
+    border-radius: 16px;
+    padding: 10px 0px;
+}
+  
+.text-button-footer {
+    font-size: 9px;
+    color: white;
+}
