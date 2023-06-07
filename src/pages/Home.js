@@ -9,7 +9,7 @@ class Home extends React.Component {
                     <div className="header-home">Qué cocino</div>
                     <div className="sub-header">Elabora tus recetas con lo que tengas a mano</div>
                     <Link to="/fridge">
-                        <img src="images/my-refrigerator.png" alt="My refrigerator" style={{ width: "100%" }}></img>
+                        <img src="images/my-refrigerator.png" alt="My refrigerator" style={{ width: "100%", marginBottom: "60px" }}></img>
                     </Link>
                     <div className="header-filter">Tiempo de elaboración</div>
                     <div className="sub-header">Recetas ordenadas por el tiempo de su elaboración</div>
