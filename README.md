@@ -23,7 +23,7 @@ Para poder integrar ambos proyectos (cordova y React.js) fue necesario:
 ```
 <script src="cordova.js" type="text/javascript"></script>
 ```
-- Configurar el rect dom par que sea cargado luego del evento cordova "deviceready".
+- Configurar el react dom par que sea cargado luego del evento cordova "deviceready".
 ```
 if (window.cordova) {
   document.addEventListener('deviceready', () => {
