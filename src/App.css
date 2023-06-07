@@ -8,11 +8,11 @@
 
   margin: 15px;
   padding: 10px 25px;
-  
+
   background: #9CCBB6;
   backdrop-filter: blur(4px);
   /* Note: backdrop-filter has minimal browser support */
-  
+
   border-radius: 19px;
 }
 
@@ -39,12 +39,16 @@
 .header-home {
   font-family: Roboto;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 30px;
   line-height: 35px;
   display: flex;
   align-items: center;
+
   color: #273343;
+
+  border: 1px solid #000000;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .header-filter {
@@ -115,8 +119,10 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .filter-container {
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* FRIDGE */
@@ -133,17 +139,17 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .counter {
-    background: #F65555;
-    display: inline-block;
-    border-radius: 100%;
-    width: 24px;
-    height: 24px;
-    color: white;
-    text-align: center;
-    position: absolute;
-    box-shadow: 0 0 8px #C1C0C0;
-    line-height: 25px;
-    font-size: 14px;
+  background: #F65555;
+  display: inline-block;
+  border-radius: 100%;
+  width: 24px;
+  height: 24px;
+  color: white;
+  text-align: center;
+  position: absolute;
+  box-shadow: 0 0 8px #C1C0C0;
+  line-height: 25px;
+  font-size: 14px;
 }
 
 .dropbtn {
@@ -162,7 +168,7 @@ scrollbar-width: none;  /* Firefox */
 }
 
 .dropdown-content {
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 0 15px;
   background-color: #F6F5F9ed;
   overflow: hidden;
@@ -174,13 +180,13 @@ scrollbar-width: none;  /* Firefox */
   opacity: 0.8;
   height: 246%;
   z-index: 1;
- 
+
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
 
-.dropdown-content > div {
+.dropdown-content>div {
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -272,7 +278,9 @@ input:checked+.design::after {
   transform: scale(1.5);
 }
 
-.text-ingredients {display: none;}
+.text-ingredients {
+  display: none;
+}
 
 .image-dropdown {
   height: 100%;
@@ -307,7 +315,7 @@ input:checked+.design::after {
   height: 44px;
   background: #F3F3F3;
   border-radius: 18px;
-  box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 0.75);
   margin-bottom: 25px;
   padding: 0px 15px 0px 15px;
   position: relative;
@@ -439,7 +447,7 @@ input:checked+.design::after {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   border: 0;
-  border-top: 1px solid rgba(0,0,0,.1);
+  border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 .card-text {
