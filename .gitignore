@@ -13,6 +13,12 @@
 # production
 /build
 
+# exclude wwww content
+www/*
+
+# exception to keep the www folder on the repository
+!www/.gitkeep
+
 # misc
 .DS_Store
 .env.local
