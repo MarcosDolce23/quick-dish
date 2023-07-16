@@ -8,7 +8,7 @@ function renameOutputFolder(buildFolderPath, outputFolderPath) {
             if (err) {
                 reject(err);
             } else {
-                resolve('Successfully built!');
+                resolve('Cordova project Successfully built!');
             }
         });
     });
