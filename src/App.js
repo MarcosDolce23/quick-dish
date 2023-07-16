@@ -13,6 +13,7 @@ import Dishes from './pages/Dishes';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import ButtonFooter from './components/ButtonFooter';
 import { initializeFavorites } from './components/Storage';
+import { getIngredients } from './components/Fridge';
 import React from 'react';
 
 
@@ -26,20 +27,7 @@ class App extends React.Component {
       coincidences: [],
       dish: null,
       filterCriteria: null,
-      fridge: [
-        {
-          id: 1,
-          name: "Lacteos",
-          image: "url(images/fridge/Lacteos.png)",
-          ingredients: ["Americano Gancia", "Campari", "Fernet", "Spritz Gancia", "Vermouth", "Vermouth Dulce", "Vermouth Rosso", "Vermouth Seco"]
-        },
-        {
-          id: 2,
-          name: "Lacteos",
-          image: "url(images/fridge/Lacteos.png)",
-          ingredients: ["Americano Gancia", "Campari", "Fernet", "Spritz Gancia", "Vermouth", "Vermouth Dulce", "Vermouth Rosso", "Vermouth Seco"]
-        }
-      ]
+      fridge: getIngredients()
     };
   }
 
