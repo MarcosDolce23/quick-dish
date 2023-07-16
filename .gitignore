@@ -13,6 +13,9 @@
 # production
 /build
 
+# wwww content
+www/*
+
 # misc
 .DS_Store
 .env.local
