@@ -18,7 +18,7 @@ function execPostReactBuild(buildFolderPath, outputFolderPath) {
     return new Promise((resolve, reject) => {
         if (fs.existsSync(buildFolderPath)) {
             if (fs.existsSync(outputFolderPath)) {
-                fs.rmdir(outputFolderPath, {recursive: true, force: true}, (err) => {
+                fs.rm(outputFolderPath, {recursive: true, force: true}, (err) => {
                     if (err) {
                         reject(err);
                         return;
