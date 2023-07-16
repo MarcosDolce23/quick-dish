@@ -14,7 +14,7 @@
 /build
 
 # wwww content
-www/*
+/www/*
 
 # misc
 .DS_Store
