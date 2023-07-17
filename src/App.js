@@ -107,38 +107,10 @@ class App extends React.Component {
     this.setState({ dish: sel });
   }
 
-  //Marca el tago como favorito (se guarda en local storage)
+  // Método para guardar los platos favoritos.
+  // En la versión anterior había creado dos métodos por algún motivo que no recuerdo
+  // así que eliminé uno de los dos pero no estoy seguro si esto puede causar errores.
   markAsFavorite(fav) {
-
-    function setFavorite(obj, name, val) {
-      for (var i in obj) {
-        if (obj[i].name === name) {
-          obj[i].favorite = val;
-          break; //Stop this loop, we found it!
-        }
-      }
-    }
-
-    let dishes = this.state.dishes.map(a => ({ ...a }));
-    let coincidences = this.state.coincidences.map(a => ({ ...a }));
-
-    let storage = window.localStorage;
-    let value = storage.getItem(fav);
-    if (value) {
-      storage.removeItem(fav)
-      setFavorite(dishes, fav, false);
-      setFavorite(coincidences, fav, false);
-    } else {
-      storage.setItem(fav, true)
-      setFavorite(dishes, fav, true);
-      setFavorite(coincidences, fav, true);
-    }
-
-    this.setState({ dishes: dishes, coincidences: coincidences });
-  }
-
-  //Revisar por qué hay dos guardar favoritos
-  markAsFavoriteDish(fav) {
 
     function setFavorite(obj, name, val) {
       for (var i in obj) {
@@ -157,17 +129,17 @@ class App extends React.Component {
     let value = storage.getItem(fav);
     if (value) {
       storage.removeItem(fav)
-      dish.favorite = false;
-      setFavorite(dish, fav, false);
+      if (dish) dish.favorite = false;
+      setFavorite(dishes, fav, false);
       setFavorite(coincidences, fav, false);
     } else {
       storage.setItem(fav, true)
-      dish.favorite = true;
+      if (dish) dish.favorite = true;
       setFavorite(dishes, fav, true);
       setFavorite(coincidences, fav, true);
     }
 
-    this.setState({ dishses: dishes, coincidences: coincidences, dish: dish });
+    this.setState({ dishes: dishes, coincidences: coincidences, dish: dish });
   }
 
   //Filtrar tragos por tiempo de preparación
@@ -240,7 +212,7 @@ class App extends React.Component {
           <Route exact path="/search/dish">
             <Dish
               dish={this.state.dish}
-              markAsFavoriteDish={(fav) => this.markAsFavoriteDish(fav)}
+              markAsFavorite={(fav) => this.markAsFavorite(fav)}
             />
           </Route>
           <Route exact path="/fridge/dishes">

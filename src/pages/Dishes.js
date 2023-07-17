@@ -7,9 +7,9 @@ class Dishes extends React.Component {
 
         const ingredients = this.props.ingredients.map(item => {
             return (
-                <p key={item} className="card-text" onClick={() => this.props.handleInputChange(item)} >{item}
+                <div key={item} className="card-text" onClick={() => this.props.handleInputChange(item)} >{item}
                     <div style={{ backgroundImage: "url(images/icons/delete-icon-x.png)" }} className="delete-icon"></div>
-                </p>
+                </div>
             );
         });
 

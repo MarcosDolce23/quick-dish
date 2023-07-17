@@ -24,7 +24,7 @@ class Dish extends React.Component {
                             className="img-favorite"
                             src={this.props.dish.favorite === true ? "images/icons/favorite-icon-selected.svg" : "images/icons/favorite-icon-unselected.svg"}
                             alt="Favorite"
-                            onClick={() => this.props.markAsFavoriteDish(this.props.dish.name)}
+                            onClick={() => this.props.markAsFavorite(this.props.dish.name)}
                         ></img>
                     </div>
                     <div className="dish-cook-time">Tiempo estimado de elaboración: {this.props.dish.cookTime} minutos</div>
