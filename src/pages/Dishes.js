@@ -4,7 +4,7 @@ import BackButton from "../components/BackButton";
 
 function Dishes({ ingredients, dishes, selectDish, markAsFavorite, handleInputChange, resetIngredients }) {
 
-    const ingredients = ingredients.map(item => {
+    const ingredientsList = ingredients.map(item => {
         return (
             <div key={item} className="card-text" onClick={() => handleInputChange(item)} >{item}
                 <div style={{ backgroundImage: "url(images/icons/delete-icon-x.png)" }} className="delete-icon"></div>
@@ -19,7 +19,7 @@ function Dishes({ ingredients, dishes, selectDish, markAsFavorite, handleInputCh
             <div className="main-container">
                 <img src="images/icons/delete-icon.svg" alt="delete" className="delete-image" onClick={() => resetIngredients()}></img>
                 <div className="card-dishes">
-                    {ingredients}
+                    {ingredientsList}
                 </div>
                 <DishesList
                     dishes={dishes}
