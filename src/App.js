@@ -21,9 +21,9 @@ import { getIngredients } from './components/Fridge';
 
 function App() {
 
+  const [dishes, setDishes] = useState(initializeFavorites());
   const [ingredientsList, setIngredientsList] = useState([]);
   const [ingredientsCount, setIngredientesCount] = useState(0);
-  const [dishes, setDishes] = useState(initializeFavorites());
   const [coincidences, setCoincidences] = useState([]);
   const [dish, setDish] = useState(null);
   const [filterCriteria, setFilterCriteria] = useState(null);
@@ -56,24 +56,24 @@ function App() {
     }
 
     let ingredientsCount = 0;
-    let ingredientsList = ingredientsList;
+    let ingredients = ingredientsList;
     let coincidences = [];
-    let dishes = dishes.map(a => ({ ...a })); //hago una copia de dishes
-    let fridge = fridge.map(a => ({ ...a })); //hago una copia de dishes
+    let dishesAux = dishes.map(a => ({ ...a })); //hago una copia de dishes
+    let fridgeAux = fridge.map(a => ({ ...a })); //hago una copia de dishes
 
     //Agrego el ingrediente elegido a la lista y si ya existe lo quito
-    if (ingredientsList.includes(ingredient)) {
-      ingredientsList = ingredientsList.filter(e => e !== ingredient);
+    if (ingredients.includes(ingredient)) {
+      ingredients = ingredients.filter(e => e !== ingredient);
     } else {
-      ingredientsList.push(ingredient);
+      ingredients.push(ingredient);
     }
 
     // 1º Por cada plato cuento cuantos ingrediente coinciden con los elegidos
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
-    dishes.forEach(element => {
-      let count = countSimilars(ingredientsList, element.ingredients);
-      let aux = countSelectables(element.ingredients, fridge);
+    dishesAux.forEach(element => {
+      let count = countSimilars(ingredients, element.ingredients);
+      let aux = countSelectables(element.ingredients, fridgeAux);
       let coincidenceRate = (count * 100) / aux;
       if (coincidenceRate > 65) {
         ingredientsCount++;
@@ -82,7 +82,7 @@ function App() {
       }
     });
 
-    setIngredientsList(ingredientsList);
+    setIngredientsList(ingredients);
     setIngredientesCount(ingredientsCount);
     setCoincidences(coincidences);
   };
@@ -118,27 +118,27 @@ function App() {
       }
     }
 
-    let dishes = dishes.map(a => ({ ...a }));
-    let coincidences = coincidences.map(a => ({ ...a }));
-    let dish = dish;
+    let dishesAux = dishes.map(a => ({ ...a }));
+    let coincidencesAux = coincidences.map(a => ({ ...a }));
+    let dishAux = dish;
 
     let storage = window.localStorage;
     let value = storage.getItem(fav);
     if (value) {
       storage.removeItem(fav)
-      if (dish) dish.favorite = false;
-      setFavorite(dishes, fav, false);
-      setFavorite(coincidences, fav, false);
+      if (dishAux) dishAux.favorite = false;
+      setFavorite(dishesAux, fav, false);
+      setFavorite(coincidencesAux, fav, false);
     } else {
       storage.setItem(fav, true)
-      if (dish) dish.favorite = true;
-      setFavorite(dishes, fav, true);
-      setFavorite(coincidences, fav, true);
+      if (dishAux) dishAux.favorite = true;
+      setFavorite(dishesAux, fav, true);
+      setFavorite(coincidencesAux, fav, true);
     }
 
-    setDishes(dishes);
-    setCoincidences(coincidences);
-    setDish(dish);
+    setDishes(dishesAux);
+    setCoincidences(coincidencesAux);
+    setDish(dishAux);
   };
 
   //Filtrar tragos por tiempo de preparación
