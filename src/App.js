@@ -20,18 +20,6 @@ import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
 
 function App() {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     ingredientsList: [],
-  //     ingredientsCount: 0,
-  //     dishes: initializeFavorites(),
-  //     coincidences: [],
-  //     dish: null,
-  //     filterCriteria: null,
-  //     fridge: getIngredients()
-  //   };
-  // }
 
   const [ingredientsList, setIngredientsList] = useState([]);
   const [ingredientsCount, setIngredientesCount] = useState(0);
@@ -94,16 +82,16 @@ function App() {
       }
     });
 
-    this.setState({ ingredientsList: ingredientsList });
-    this.setState({ ingredientsCount: ingredientsCount });
-    this.setState({ coincidences: coincidences })
+    setIngredientsList(ingredientsList);
+    setIngredientesCount(ingredientsCount);
+    setCoincidences(coincidences);
   };
 
   //Reinicio los ingredientes a vacío.
   const resetIngredients = () => {
-    this.setState({ ingredientsList: [] });
-    this.setState({ ingredientsCount: 0 });
-    this.setState({ coincidences: [] });
+    setIngredientsList([]);
+    setIngredientesCount(0);
+    setCoincidences([]);
   };
 
   //Este método indica que filtro se usará para los platos a mostrar
@@ -113,7 +101,7 @@ function App() {
 
   //Selecciona un plato
   const selectDish = (sel) => {
-    this.setState({ dish: sel });
+    setDish(sel);
   };
 
   // Método para guardar los platos favoritos.
@@ -148,7 +136,9 @@ function App() {
       setFavorite(coincidences, fav, true);
     }
 
-    this.setState({ dishes: dishes, coincidences: coincidences, dish: dish });
+    setDishes(dishes);
+    setCoincidences(coincidences);
+    setDish(dish);
   };
 
   //Filtrar tragos por tiempo de preparación
