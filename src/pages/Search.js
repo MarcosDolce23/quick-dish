@@ -4,14 +4,14 @@ import BackButton from "../components/BackButton";
 import SearchBar from "../components/SearchBar";
 import { useState } from "react";
 
-function Search({ dishes, selectDish, markAsFavorite }) {
+function Search({ dishes, selectDish, markAsFavorite, title }) {
 
     const [filterText, setFilterText] = useState('');
 
     return (
         <div className="main-div">
             <BackButton></BackButton>
-            <div className="title">Explorar</div>
+            <div className="title">{title}</div>
             <div className="main-container">
                 <SearchBar 
                     filterText={filterText} 

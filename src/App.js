@@ -196,6 +196,7 @@ function App() {
             dishes={filterCriteria === null ? dishes : dishes.filter(filterByCookTime(filterCriteria))}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
+            title={"Explorar"}
           />
         </Route>
         <Route exact path="/favorites">
@@ -203,7 +204,7 @@ function App() {
             dishes={dishes.filter(e => e.favorite === true)}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            filterDishes={(e) => filterDishes(e)}
+            title={"Favoritos"}
           />
         </Route>
         <Route exact path="/search/dish">
