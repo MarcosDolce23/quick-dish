@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BackButton from "../components/BackButton";
 import Ingredients from "../components/Ingredients";
 
-function Fridge({value, ingredients, ingredientsCount, onChange}) {
+function Fridge({value, ingredients, coincidences, onChange}) {
     return (
         <div className="main-div">
             <BackButton></BackButton>
@@ -16,7 +16,7 @@ function Fridge({value, ingredients, ingredientsCount, onChange}) {
                 ></Ingredients>
             </div>
             <div className="dishes-button">
-                {ingredientsCount > 0 ? <div className="counter">{ingredientsCount}</div> : null}
+                {coincidences.length > 0 ? <div className="counter">{coincidences.length}</div> : null}
                 <Link to='/fridge/dishes'>
                     <img src="images/icons/inbox.svg" alt="Dishes"></img>
                 </Link>

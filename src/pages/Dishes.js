@@ -23,6 +23,7 @@ function Dishes({ ingredients, dishes, selectDish, markAsFavorite, handleInputCh
                 </div>
                 <DishesList
                     dishes={dishes}
+                    filterText={''}
                     selectDish={(sel) => selectDish(sel)}
                     markAsFavorite={(fav) => markAsFavorite(fav)}
                 ></DishesList>

@@ -22,7 +22,6 @@ function App() {
 
   const [dishes, setDishes] = useState(initializeFavorites());
   const [ingredientsList, setIngredientsList] = useState([]);
-  const [ingredientsCount, setIngredientesCount] = useState(0);
   const [coincidences, setCoincidences] = useState([]);
   const [dish, setDish] = useState(null);
   const [filterCriteria, setFilterCriteria] = useState(null);
@@ -55,7 +54,6 @@ function App() {
   //Buscar un nombre descriptivo para este método.
   const handleInputChange = (ingredient) => {
 
-    let ingredientsCount = 0;
     let ingredients = ingredientsList;
     let coincidences = [];
     let dishesAux = dishes.map(a => ({ ...a })); //hago una copia de dishes
@@ -76,21 +74,18 @@ function App() {
       let aux = countSelectables(element.ingredients, fridgeAux);
       let coincidenceRate = (count * 100) / aux;
       if (coincidenceRate > 65) {
-        ingredientsCount++;
         coincidences.push(element);
         element.coincidences = count; //Agregar esta propiedad a las recetas
       }
     });
 
     setIngredientsList(ingredients);
-    setIngredientesCount(ingredientsCount);
     setCoincidences(coincidences);
   };
 
   //Reinicio los ingredientes a vacío.
   const resetIngredients = () => {
     setIngredientsList([]);
-    setIngredientesCount(0);
     setCoincidences([]);
   };
 
@@ -185,7 +180,6 @@ function App() {
         <Route exact path="/fridge">
           <Fridge
             value={ingredientsList}
-            ingredientsCount={ingredientsCount}
             coincidences={coincidences}
             ingredients={fridge}
             onChange={(ingredient) => handleInputChange(ingredient)}
