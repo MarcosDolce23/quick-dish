@@ -29,31 +29,32 @@ function App() {
   const [filterCriteria, setFilterCriteria] = useState(null);
   const fridge = getIngredients();
 
+  //Esta función compara cuantos elementos coinciden entres dos arrays 
+  const countSimilars = (arrayA, arrayB) => {
+    let matches = 0;
+    for (let i = 0; i < arrayA.length; i++) {
+      if (arrayB.indexOf(arrayA[i]) !== -1)
+        matches++;
+    }
+    return matches;
+  }
+
+  // Esta función cuenta cuantos ingredientes del plato pueden ser seleccionados de la heladera (no todos los ingredientes de un plato son elegibles)
+  const countSelectables = (dishIngredients, fridge) => {
+    let selectable = 0;
+    dishIngredients.forEach(element => {
+      for (let i = 0; i < fridge.length; i++) {
+        if (fridge[i].ingredients.includes(element)) {
+          selectable += 1;
+          break;
+        }
+      }
+    })
+    return selectable;
+  }
+
   //Buscar un nombre descriptivo para este método.
   const handleInputChange = (ingredient) => {
-    //Esta función compara cuantos elementos coinciden entres dos arrays 
-    function countSimilars(arrayA, arrayB) {
-      var matches = 0;
-      for (var i = 0; i < arrayA.length; i++) {
-        if (arrayB.indexOf(arrayA[i]) !== -1)
-          matches++;
-      }
-      return matches;
-    }
-
-    // Esta función cuenta cuantos ingredientes del plato pueden ser seleccionados de la heladera (no todos los ingredientes de un plato son elegibles)
-    function countSelectables(dishIngredients, fridge) {
-      let selectable = 0;
-      dishIngredients.forEach(element => {
-        for (var i = 0; i < fridge.length; i++) {
-          if (fridge[i].ingredients.includes(element)) {
-            selectable += 1;
-            break;
-          }
-        }
-      })
-      return selectable;
-    }
 
     let ingredientsCount = 0;
     let ingredients = ingredientsList;
@@ -104,19 +105,19 @@ function App() {
     setDish(sel);
   };
 
+  const setFavorite = (obj, name, val) => {
+    for (let i in obj) {
+      if (obj[i].name === name) {
+        obj[i].favorite = val;
+        break; //Stop this loop, we found it!
+      }
+    }
+  }
+
   // Método para guardar los platos favoritos.
   // En la versión anterior había creado dos métodos por algún motivo que no recuerdo
   // así que eliminé uno de los dos pero no estoy seguro si esto puede causar errores.
   const markAsFavorite = (fav) => {
-
-    function setFavorite(obj, name, val) {
-      for (var i in obj) {
-        if (obj[i].name === name) {
-          obj[i].favorite = val;
-          break; //Stop this loop, we found it!
-        }
-      }
-    }
 
     let dishesAux = dishes.map(a => ({ ...a }));
     let coincidencesAux = coincidences.map(a => ({ ...a }));
@@ -157,11 +158,11 @@ function App() {
   };
 
   const filterDishes = (e) => {
-    var filter = e.target.value.toUpperCase();
+    let filter = e.target.value.toUpperCase();
 
-    var divs = document.getElementsByClassName("dish-card");
-    for (var i = 0; i < divs.length; i++) {
-      var a = divs[i].getElementsByClassName("h1-card")[0];
+    let divs = document.getElementsByClassName("dish-card");
+    for (let i = 0; i < divs.length; i++) {
+      let a = divs[i].getElementsByClassName("h1-card")[0];
 
       if (a) {
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
