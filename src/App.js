@@ -197,7 +197,6 @@ function App() {
             dishes={filterCriteria === null ? dishes : dishes.filter(filterByCookTime(filterCriteria))}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            filterDishes={(e) => filterDishes(e)}
           />
         </Route>
         <Route exact path="/favorites">
