@@ -151,24 +151,6 @@ function App() {
     }
   };
 
-  const filterDishes = (e) => {
-    let filter = e.target.value.toUpperCase();
-
-    let divs = document.getElementsByClassName("dish-card");
-    for (let i = 0; i < divs.length; i++) {
-      let a = divs[i].getElementsByClassName("h1-card")[0];
-
-      if (a) {
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          divs[i].style.display = "";
-        } else {
-          divs[i].style.display = "none";
-        }
-      }
-    }
-
-  };
-
   return (
     <Router>
       <Switch>
