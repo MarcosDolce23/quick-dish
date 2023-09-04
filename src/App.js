@@ -9,7 +9,6 @@ import './App.css';
 import Home from './pages/Home';
 import Fridge from './pages/Fridge';
 import Search from './pages/Search';
-import Favorites from './pages/Favorites';
 import Dish from './pages/Dish';
 import Dishes from './pages/Dishes';
 
@@ -200,7 +199,7 @@ function App() {
           />
         </Route>
         <Route exact path="/favorites">
-          <Favorites
+          <Search
             dishes={dishes.filter(e => e.favorite === true)}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
