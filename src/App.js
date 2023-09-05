@@ -21,8 +21,7 @@ import { getIngredients } from './components/Fridge';
 function App() {
 
   const [dishes, setDishes] = useState(initializeFavorites());
-  const [ingredientsList, setIngredientsList] = useState([]);
-  const [coincidences, setCoincidences] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [dish, setDish] = useState(null);
   const [filterCriteria, setFilterCriteria] = useState(null);
   const fridge = getIngredients();
@@ -51,27 +50,28 @@ function App() {
     return selectable;
   }
 
-  //Buscar un nombre descriptivo para este método.
-  const handleInputChange = (ingredient) => {
-
-    let ingredients = ingredientsList;
-    let coincidences = [];
-    let dishesAux = dishes.map(a => ({ ...a })); //hago una copia de dishes
-    let fridgeAux = fridge.map(a => ({ ...a })); //hago una copia de dishes
-
+  // Selecciona/Deselecciona ingredientes
+  const toggleIngredients = (ingredient) => {
+    let ingredients = selectedIngredients.slice();
     //Agrego el ingrediente elegido a la lista y si ya existe lo quito
     if (ingredients.includes(ingredient)) {
       ingredients = ingredients.filter(e => e !== ingredient);
     } else {
       ingredients.push(ingredient);
     }
+    setSelectedIngredients(ingredients);
+  }
+
+  //Buscar un nombre descriptivo para este método.
+  const returnCoincidences = () => {
+    let coincidences = [];
 
     // 1º Por cada plato cuento cuantos ingrediente coinciden con los elegidos
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
-    dishesAux.forEach(element => {
-      let count = countSimilars(ingredients, element.ingredients);
-      let aux = countSelectables(element.ingredients, fridgeAux);
+    dishes.forEach(element => {
+      let count = countSimilars(selectedIngredients, element.ingredients);
+      let aux = countSelectables(element.ingredients, fridge);
       let coincidenceRate = (count * 100) / aux;
       if (coincidenceRate > 65) {
         coincidences.push(element);
@@ -79,14 +79,12 @@ function App() {
       }
     });
 
-    setIngredientsList(ingredients);
-    setCoincidences(coincidences);
+    return coincidences;
   };
 
   //Reinicio los ingredientes a vacío.
   const resetIngredients = () => {
-    setIngredientsList([]);
-    setCoincidences([]);
+    setSelectedIngredients([]);
   };
 
   //Este método indica que filtro se usará para los platos a mostrar
@@ -114,7 +112,6 @@ function App() {
   const markAsFavorite = (fav) => {
 
     let dishesAux = dishes.map(a => ({ ...a }));
-    let coincidencesAux = coincidences.map(a => ({ ...a }));
     let dishAux = dish;
 
     let storage = window.localStorage;
@@ -123,16 +120,13 @@ function App() {
       storage.removeItem(fav)
       if (dishAux) dishAux.favorite = false;
       setFavorite(dishesAux, fav, false);
-      setFavorite(coincidencesAux, fav, false);
     } else {
       storage.setItem(fav, true)
       if (dishAux) dishAux.favorite = true;
       setFavorite(dishesAux, fav, true);
-      setFavorite(coincidencesAux, fav, true);
     }
 
     setDishes(dishesAux);
-    setCoincidences(coincidencesAux);
     setDish(dishAux);
   };
 
@@ -161,10 +155,10 @@ function App() {
         </Route>
         <Route exact path="/fridge">
           <Fridge
-            value={ingredientsList}
-            coincidences={coincidences}
+            value={selectedIngredients}
+            coincidences={returnCoincidences()}
             ingredients={fridge}
-            onChange={(ingredient) => handleInputChange(ingredient)}
+            onChange={(ingredient) => toggleIngredients(ingredient)}
           />
         </Route>
         <Route exact path="/search">
@@ -191,11 +185,11 @@ function App() {
         </Route>
         <Route exact path="/fridge/dishes">
           <Dishes
-            ingredients={ingredientsList}
-            dishes={coincidences.sort((a, b) => { return b.coincidences - a.coincidences })}
+            ingredients={selectedIngredients}
+            dishes={returnCoincidences().sort((a, b) => { return b.coincidences - a.coincidences })}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            handleInputChange={(ingredient) => handleInputChange(ingredient)}
+            toggleIngredients={(ingredient) => toggleIngredients(ingredient)}
             resetIngredients={() => resetIngredients()}
           />
         </Route>
