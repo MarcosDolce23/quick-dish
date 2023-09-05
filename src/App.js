@@ -21,9 +21,10 @@ import { getIngredients } from './components/Fridge';
 function App() {
 
   const [dishes, setDishes] = useState(initializeFavorites());
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [dish, setDish] = useState(null);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
+  
   const fridge = getIngredients();
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
@@ -34,12 +35,12 @@ function App() {
         matches++;
     }
     return matches;
-  }
+  };
 
   // Esta función cuenta cuantos ingredientes del plato pueden ser seleccionados de la heladera (no todos los ingredientes de un plato son elegibles)
-  const countSelectables = (dishIngredients, fridge) => {
+  const countSelectables = (ingredients, fridge) => {
     let selectable = 0;
-    dishIngredients.forEach(element => {
+    ingredients.forEach(element => {
       for (let i = 0; i < fridge.length; i++) {
         if (fridge[i].ingredients.includes(element)) {
           selectable += 1;
@@ -48,7 +49,7 @@ function App() {
       }
     })
     return selectable;
-  }
+  };
 
   // Selecciona/Deselecciona ingredientes
   const toggleIngredients = (ingredient) => {
@@ -60,7 +61,7 @@ function App() {
       ingredients.push(ingredient);
     }
     setSelectedIngredients(ingredients);
-  }
+  };
 
   //Buscar un nombre descriptivo para este método.
   const returnCoincidences = () => {
@@ -69,14 +70,11 @@ function App() {
     // 1º Por cada plato cuento cuantos ingrediente coinciden con los elegidos
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
-    dishes.forEach(element => {
-      let count = countSimilars(selectedIngredients, element.ingredients);
-      let aux = countSelectables(element.ingredients, fridge);
+    dishes.forEach(dish => {
+      let count = countSimilars(selectedIngredients, dish.ingredients);
+      let aux = countSelectables(dish.ingredients, fridge);
       let coincidenceRate = (count * 100) / aux;
-      if (coincidenceRate > 65) {
-        coincidences.push(element);
-        element.coincidences = count; //Agregar esta propiedad a las recetas
-      }
+      if (coincidenceRate > 65) coincidences.push(dish);
     });
 
     return coincidences;
@@ -92,7 +90,6 @@ function App() {
     setFilterCriteria(filter);
   };
 
-  //Selecciona un plato
   const selectDish = (sel) => {
     setDish(sel);
   };
@@ -107,27 +104,20 @@ function App() {
   }
 
   // Método para guardar los platos favoritos.
-  // En la versión anterior había creado dos métodos por algún motivo que no recuerdo
-  // así que eliminé uno de los dos pero no estoy seguro si esto puede causar errores.
   const markAsFavorite = (fav) => {
-
-    let dishesAux = dishes.map(a => ({ ...a }));
-    let dishAux = dish;
-
+    let dishesList = dishes.slice();
     let storage = window.localStorage;
     let value = storage.getItem(fav);
+
     if (value) {
       storage.removeItem(fav)
-      if (dishAux) dishAux.favorite = false;
-      setFavorite(dishesAux, fav, false);
+      setFavorite(dishesList, fav, false);
     } else {
       storage.setItem(fav, true)
-      if (dishAux) dishAux.favorite = true;
-      setFavorite(dishesAux, fav, true);
+      setFavorite(dishesList, fav, true);
     }
 
-    setDishes(dishesAux);
-    setDish(dishAux);
+    setDishes(dishesList);
   };
 
   //Filtrar tragos por tiempo de preparación
