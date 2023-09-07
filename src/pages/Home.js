@@ -1,7 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Home({onClick}) {
+function Home({ onClick }) {
+    const cookTime = [
+        {
+            time: 20,
+            image: "url(images/dishes/test-image-icon.png)"
+        },
+        {
+            time: 30,
+            image: "url(images/dishes/test-image-icon.png)"
+        },
+        {
+            time: 40,
+            image: "url(images/dishes/test-image-icon.png)"
+        }
+    ];
+
+    const timeCookingRows = cookTime.map((item, i, a) => {
+        return (
+            <Link key={i} to="/search" onClick={() => onClick(item.time)} >
+                <div className="filter-button">
+                    <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
+                    {
+                        i === 0 ?
+                            <div className="filter-text">Menos de {item.time} min</div>
+                            :
+                            i === a.length - 1 ?
+                                <div className="filter-text">Más de {item.time} min</div>
+                                :
+                                <div className="filter-text">Entre {item.time} min y {a[i + 1].time} min</div>
+                    }
+                </div>
+            </Link>
+        );
+    });
+
     return (
         <div className="main-div">
             <div className="main-container">
@@ -13,24 +47,7 @@ function Home({onClick}) {
                 <div className="header-filter">Tiempo de elaboración</div>
                 <div className="sub-header">Recetas ordenadas por el tiempo de su elaboración</div>
                 <div className="filter-container">
-                    <Link to="/search" onClick={() => onClick(20)} >
-                        <div className="filter-button">
-                            <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
-                            <div className="filter-text">Menos de 20 min</div>
-                        </div>
-                    </Link>
-                    <Link to="/search" onClick={() => onClick(30)}>
-                        <div className="filter-button">
-                            <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
-                            <div className="filter-text">Entre 20 y 40 min</div>
-                        </div>
-                    </Link>
-                    <Link to="/search" onClick={() => onClick(40)}>
-                        <div className="filter-button">
-                            <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
-                            <div className="filter-text">Más de 40 min</div>
-                        </div>
-                    </Link>
+                    {timeCookingRows}
                 </div>
                 <div className="header-filter">Veganas</div>
                 <div className="sub-header">Recetas elaboradas sin productos de origen animal</div>
