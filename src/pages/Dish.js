@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import BackButton from "../components/BackButton";
 
 function Dish({ dish, markAsFavorite }) {
+    const { t } = useTranslation();
 
     const ingredients = dish.ingredients.map(item => {
         return (
@@ -28,7 +31,6 @@ function Dish({ dish, markAsFavorite }) {
             <BackButton></BackButton>
             <div>
                 <img src={dish.headerImage} alt="Header" style={{ width: "100%" }}></img>
-                <div className="title-home">Dish</div>
             </div>
             <div className="dish-body">
                 <div className="dish-body-div">
@@ -40,12 +42,12 @@ function Dish({ dish, markAsFavorite }) {
                         onClick={() => markAsFavorite(dish.name)}
                     ></img>
                 </div>
-                <div className="dish-cook-time">Tiempo estimado de elaboración: {dish.cookTime} minutos</div>
+                <div className="dish-cook-time">{t('dish.cookTime')}: {dish.cookTime} minutos</div>
                 <hr className="dish-hr"></hr>
-                <div className="dish-ingredients">Ingredientes</div>
+                <div className="dish-ingredients">{t('dish.ingredients')}</div>
                 <div>{ingredients}</div>
                 <hr className="dish-hr"></hr>
-                <div className="dish-ingredients">Preparación 1 porción</div>
+                <div className="dish-ingredients">{t('dish.steps')}</div>
                 <div style={{ marginTop: "15px" }}>
                     {steps}
                 </div>
