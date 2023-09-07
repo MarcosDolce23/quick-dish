@@ -29,6 +29,9 @@ i18n
                         cookTime: 'Estimated processing time',
                         ingredients: 'Ingridients',
                         steps: 'Preparation per portion'
+                    },
+                    dishes: {
+                        title: 'My Fridge'
                     }
                 }
             },
@@ -44,6 +47,9 @@ i18n
                         cookTime: 'Tiempo estimado de elaboración',
                         ingredients: 'Ingredientes',
                         steps: 'Preparación 1 porción'
+                    },
+                    dishes: {
+                        title: 'Mi Refrigerador'
                     }
                 }
             }
