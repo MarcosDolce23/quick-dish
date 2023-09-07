@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 
 // Import CSS
 import './App.css';
@@ -19,6 +19,7 @@ import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
 
 function App() {
+  const { t } = useTranslation();
 
   const [dishes, setDishes] = useState(initializeFavorites());
   const [dish, setDish] = useState(null);
@@ -158,7 +159,7 @@ function App() {
             dishes={filterCriteria === null ? dishes : dishes.filter(filterByCookTime(filterCriteria))}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            title={"Explorar"}
+            title={t('footer.search')}
           />
         </Route>
         <Route exact path="/favorites">
@@ -166,7 +167,7 @@ function App() {
             dishes={dishes.filter(e => e.favorite === true)}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            title={"Favoritos"}
+            title={t('footer.favourites')}
           />
         </Route>
         <Route exact path="/search/dish">
@@ -188,27 +189,28 @@ function App() {
       </Switch>
       <div className="footer">
         <ButtonFooter
-          label="Inicio"
+          label={t('footer.home')}
           to="/"
           activeOnlyWhenExact={true}
           onClickFooter={() => resetIngredients()}
           imagen="images/icons/home.png"
         />
         <ButtonFooter
-          label="Refrigerador"
+          label={t('footer.fridge')}
           to="/fridge"
           activeOnlyWhenExact={false}
           imagen="images/icons/refrigerator.png"
         />
         <ButtonFooter
-          label="Explorar"
+          label={t('footer.search')}
           to="/search"
           activeOnlyWhenExact={false}
           onClickFooter={() => updateFilterCriteria(null)}
           imagen="images/icons/search.png"
         />
         <ButtonFooter
-          label="Favoritos"
+          // label="Favoritos"
+          label={t('footer.favourites')}
           to="/favorites"
           activeOnlyWhenExact={true}
           imagen="images/icons/favorites.png"

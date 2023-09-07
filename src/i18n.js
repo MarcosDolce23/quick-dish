@@ -19,7 +19,22 @@ i18n
     resources: {
       en: {
         translation: {
-          // here we will place our translations...
+          footer: {
+            home: 'Home',
+            fridge: 'Fridge',
+            search: 'Search',
+            favourites: 'Favourites'
+          }
+        }
+      },
+      es: {
+        translation: {
+            footer : {
+                home: 'Inicio',
+                fridge: 'Refrigerador',
+                search: "Explorar",
+                favourites: "Favoritos"
+            }
         }
       }
     }
