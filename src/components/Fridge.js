@@ -4,13 +4,7 @@ export function getIngredients() {
             id: 1,
             name: "Lacteos",
             image: "url(images/fridge/Lacteos.png)",
-            ingredients: ["Americano Gancia", "Campari", "Fernet", "Spritz Gancia", "Vermouth", "Vermouth Dulce", "Vermouth Rosso", "Vermouth Seco"]
-        },
-        {
-            id: 2,
-            name: "Lacteos",
-            image: "url(images/fridge/Lacteos.png)",
-            ingredients: ["Americano Gancia", "Campari", "Fernet", "Spritz Gancia", "Vermouth", "Vermouth Dulce", "Vermouth Rosso", "Vermouth Seco"]
+            ingredients: ["Manteca", "Leche", "Crema", "Queso"]
         },
         {
             id: 3,

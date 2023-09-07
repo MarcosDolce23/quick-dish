@@ -1,33 +1,30 @@
 import React from "react";
 import DishesList from "../components/DishesList";
 import BackButton from "../components/BackButton";
+import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
-class Search extends React.Component {
-    render() {
-        return (
-            <div className="main-div">
-                <BackButton></BackButton>
-                <div className="title">Explorar</div>
-                <div className="main-container">
-                    <div className="search-container">
-                        <div className="text">
-                            <input
-                                type="text"
-                                placeholder="Busca tus recetas"
-                                className="input"
-                                onChange={(e) => this.props.filterDishes(e)}>
-                            </input>
-                        </div>
-                    </div>
-                    <DishesList
-                        dishes={this.props.dishes.sort((a, b) => a.name.localeCompare(b.name))}
-                        selectDish={(sel) => this.props.selectDish(sel)}
-                        markAsFavorite={(fav) => this.props.markAsFavorite(fav)}
-                    ></DishesList>
-                </div>
+function Search({ dishes, selectDish, markAsFavorite, title }) {
+
+    const [filterText, setFilterText] = useState('');
+
+    return (
+        <div className="main-div">
+            <BackButton></BackButton>
+            <div className="title">{title}</div>
+            <div className="main-container">
+                <SearchBar 
+                    filterText={filterText} 
+                    onFilterTextChange={setFilterText} />
+                <DishesList
+                    dishes={dishes}
+                    filterText={filterText}
+                    selectDish={(sel) => selectDish(sel)}
+                    markAsFavorite={(fav) => markAsFavorite(fav)}
+                ></DishesList>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Search;
