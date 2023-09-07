@@ -9,6 +9,20 @@ function Dish({ dish, markAsFavorite }) {
         );
     });
 
+    const steps = dish.recipe.map((item, i) => {
+        return (
+            <div key={"c" + i} className="div-list">
+                <div className="content-item">
+                    <div className="number-item">{i + 1}</div>
+                </div>
+
+                <div key={"c" + i} className="content-list">
+                    <div>{item}</div>
+                </div>
+            </div>
+        )
+    });
+
     return (
         <div className="main-div">
             <BackButton></BackButton>
@@ -33,19 +47,7 @@ function Dish({ dish, markAsFavorite }) {
                 <hr className="dish-hr"></hr>
                 <div className="dish-ingredients">Preparación 1 porción</div>
                 <div style={{ marginTop: "15px" }}>
-                    {dish.recipe.map((item, i) => {
-                        return (
-                            <div key={"c" + i} className="div-list">
-                                <div className="content-item">
-                                    <div className="number-item">{i + 1}</div>
-                                </div>
-
-                                <div key={"c" + i} className="content-list">
-                                    <div>{item}</div>
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {steps}
                 </div>
             </div>
         </div>
