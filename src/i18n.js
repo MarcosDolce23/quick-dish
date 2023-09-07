@@ -32,6 +32,9 @@ i18n
                     },
                     dishes: {
                         title: 'My Fridge'
+                    },
+                    fridge: {
+                        title: 'Fridge'
                     }
                 }
             },
@@ -50,6 +53,9 @@ i18n
                     },
                     dishes: {
                         title: 'Mi Refrigerador'
+                    },
+                    fridge: {
+                        title: 'Refrigerador'
                     }
                 }
             }

@@ -1,13 +1,17 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
 import BackButton from "../components/BackButton";
 import Ingredients from "../components/Ingredients";
 
 function Fridge({value, ingredients, coincidences, onChange}) {
+    const { t } = useTranslation();
+
     return (
         <div className="main-div">
             <BackButton></BackButton>
-            <div className="title">Refrigerador</div>
+            <div className="title">{t('fridge.title')}</div>
             <div className="main-container">
                 <Ingredients
                     value={value}
