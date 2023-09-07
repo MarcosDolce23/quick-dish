@@ -11,6 +11,7 @@ export function initializeFavorites() {
             "Queso"
          ],
          cookTime: 30,
+         vegan: false,
          recipe: [
             "Verter en una coctelera 60ml Tequila.",
             "Agregar 60ml Ron Blanco.",
@@ -33,6 +34,7 @@ export function initializeFavorites() {
             "Lechuga",
             "Crema"
          ],
+         vegan: true,
          cookTime: 15,
          recipe: [
             "Verter el 33% de una jarra con Jugo de Naranja natural.",

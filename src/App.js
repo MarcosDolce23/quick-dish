@@ -24,7 +24,7 @@ function App() {
   const [dish, setDish] = useState(null);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
-  
+
   const fridge = getIngredients();
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
@@ -140,7 +140,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Home
-            onClick={(filter) => updateFilterCriteria(filter)}
+            dishes={dishes}
+            onClickFilterTime={(filter) => updateFilterCriteria(filter)}
+            onClickVegan={selectDish}
           />
         </Route>
         <Route exact path="/fridge">

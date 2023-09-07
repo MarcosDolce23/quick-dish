@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Home({ onClick }) {
+function Home({ dishes, onClickFilterTime,  onClickVegan}) {
     const cookTime = [
         {
             time: 20,
@@ -19,7 +19,7 @@ function Home({ onClick }) {
 
     const timeCookingRows = cookTime.map((item, i, a) => {
         return (
-            <Link key={i} to="/search" onClick={() => onClick(item.time)} >
+            <Link key={i} to="/search" onClick={() => onClickFilterTime(item.time)} >
                 <div className="filter-button">
                     <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
                     {
@@ -34,6 +34,19 @@ function Home({ onClick }) {
                 </div>
             </Link>
         );
+    });
+
+    const veganDishes = dishes.map(dish => {
+        if (!dish.vegan)
+            return;
+        return (
+            <Link key={dish.id} to="/search/dish" onClick={() => onClickVegan(dish)}>
+                <div className="filter-button">
+                    <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
+                    <div className="filter-text">{dish.name}</div>
+                </div>
+            </Link>
+        )
     });
 
     return (
@@ -52,18 +65,7 @@ function Home({ onClick }) {
                 <div className="header-filter">Veganas</div>
                 <div className="sub-header">Recetas elaboradas sin productos de origen animal</div>
                 <div className="filter-container">
-                    <div className="filter-button">
-                        <div className="filter-image"></div>
-                        <div className="filter-text">Nombre de receta Lorem Ipsum</div>
-                    </div>
-                    <div className="filter-button">
-                        <div className="filter-image"></div>
-                        <div className="filter-text">Nombre de receta Lorem Ipsum</div>
-                    </div>
-                    <div className="filter-button">
-                        <div className="filter-image"></div>
-                        <div className="filter-text">Nombre de receta Lorem Ipsum</div>
-                    </div>
+                    {veganDishes}
                 </div>
             </div>
         </div>
