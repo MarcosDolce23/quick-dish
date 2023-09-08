@@ -47,6 +47,9 @@ i18n
                         moreThan: 'More than',
                         between: 'between',
                         and: 'and'
+                    },
+                    searchBar: {
+                        placeholder: 'Search your recipes'
                     }
                 }
             },
@@ -80,6 +83,9 @@ i18n
                         moreThan: 'Más de',
                         between: 'Entre',
                         and: 'y'
+                    },
+                    searchBar: {
+                        placeholder: 'Busca tus recetas'
                     }
                 }
             }
