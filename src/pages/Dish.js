@@ -39,7 +39,7 @@ function Dish({ dish, markAsFavorite }) {
                         className="img-favorite"
                         src={dish.favorite === true ? "images/icons/favorite-icon-selected.svg" : "images/icons/favorite-icon-unselected.svg"}
                         alt="Favorite"
-                        onClick={() => markAsFavorite(dish.name)}
+                        onClick={() => markAsFavorite(dish.id)}
                     ></img>
                 </div>
                 <div className="dish-cook-time">{t('dish.cookTime')}: {dish.cookTime} minutos</div>

@@ -104,7 +104,7 @@ export function initializeFavorites(locale) {
 
    if (locale === "en") {
       for (let i in enDishes) {
-         let value = storage.getItem(enDishes[i].name);
+         let value = storage.getItem(enDishes[i].id);
          if (value) {
             esDishes[i].favorite = true;
          }
@@ -115,7 +115,7 @@ export function initializeFavorites(locale) {
 
    if (locale === "es") {
       for (let i in esDishes) {
-         let value = storage.getItem(esDishes[i].name);
+         let value = storage.getItem(esDishes[i].id);
          if (value) {
             esDishes[i].favorite = true;
          }

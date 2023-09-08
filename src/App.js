@@ -96,9 +96,9 @@ function App() {
     setDish(sel);
   };
 
-  const setFavorite = (obj, name, val) => {
+  const setFavorite = (obj, id, val) => {
     for (let i in obj) {
-      if (obj[i].name === name) {
+      if (obj[i].id === id) {
         obj[i].favorite = val;
         break; //Stop this loop, we found it!
       }

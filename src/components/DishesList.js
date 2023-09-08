@@ -29,7 +29,7 @@ function DishesList({ dishes, filterText, selectDish, markAsFavorite }) {
                     </Link>
                     <div
                         className="plus-card-dish"
-                        onClick={() => markAsFavorite(dish.name)}
+                        onClick={() => markAsFavorite(dish.id)}
                         style={dish.favorite === true ? { backgroundImage: "url(images/icons/favorite-icon-selected.svg)" } : { backgroundImage: "url(images/icons/favorite-icon-unselected.svg)" }}
                     ></div>
                 </div>
