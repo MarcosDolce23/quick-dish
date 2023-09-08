@@ -35,6 +35,18 @@ i18n
                     },
                     fridge: {
                         title: 'Fridge'
+                    },
+                    home: {
+                        headerHome: 'What I cook',
+                        subHeaderhome: 'Prepare your recipes with what you have on hand',
+                        headerFilter: 'Time of preparation',
+                        subHeaderFilter: 'Recipes ordered by the time of preparation',
+                        vegansTitle: 'Vegans',
+                        vegansSubTitle: 'Recetas elaboradas sin productos de origen animal',
+                        lessThan: 'Less than',
+                        moreThan: 'More than',
+                        between: 'between',
+                        and: 'and'
                     }
                 }
             },
@@ -56,6 +68,18 @@ i18n
                     },
                     fridge: {
                         title: 'Refrigerador'
+                    },
+                    home: {
+                        headerHome: 'Qué cocino',
+                        subHeaderhome: 'Elabora tus recetas con lo que tengas a mano',
+                        headerFilter: 'Tiempo de elaboración',
+                        subHeaderFilter: 'Recetas ordenadas por el tiempo de su elaboración',
+                        vegansTitle: 'Veganas',
+                        vegansSubTitle: 'Recetas elaboradas sin productos de origen animal',
+                        lessThan: 'Menos de',
+                        moreThan: 'Más de',
+                        between: 'Entre',
+                        and: 'y'
                     }
                 }
             }
