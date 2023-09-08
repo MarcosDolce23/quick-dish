@@ -41,8 +41,6 @@
     ]
   },
   "dependencies": {
-    "@sveltejs/adapter-netlify": "^1.0.0-next.88",
-    "@sveltejs/kit": "^1.0.0-next.589",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
