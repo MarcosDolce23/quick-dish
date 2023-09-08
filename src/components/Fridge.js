@@ -1,4 +1,5 @@
-export function getIngredients() {
+export function getIngredients(locale) {
+    
     let esIngredients = [
         {
             id: 1,
@@ -7,12 +8,30 @@ export function getIngredients() {
             ingredients: ["Manteca", "Leche", "Crema", "Queso"]
         },
         {
-            id: 3,
+            id: 2,
             name: "Vegetales",
             image: "url(images/fridge/Lacteos.png)",
             ingredients: ["Lechuga", "Cebolla", "Berenjena"]
         }
     ];
 
-    return esIngredients;
+    let enIngredients = [
+        {
+            id: 1,
+            name: "Dairy",
+            image: "url(images/fridge/Lacteos.png)",
+            ingredients: ["Butter", "Milk", "Cream", "Cheese"]
+        },
+        {
+            id: 2,
+            name: "Vegetables",
+            image: "url(images/fridge/Lacteos.png)",
+            ingredients: ["Lettuce", "Onion", "Eggplant"]
+        }
+    ];
+
+    if (locale === "en")
+        return enIngredients;
+    if (locale === "es")
+        return esIngredients;
 }

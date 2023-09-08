@@ -20,14 +20,14 @@ import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
 
 function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [dishes, setDishes] = useState(initializeFavorites());
   const [dish, setDish] = useState(null);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
 
-  const fridge = getIngredients();
+  const fridge = getIngredients(i18n.resolvedLanguage);
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
   const countSimilars = (arrayA, arrayB) => {
