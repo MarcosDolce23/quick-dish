@@ -1,5 +1,5 @@
 export function getIngredients() {
-    let ingredients = [
+    let esIngredients = [
         {
             id: 1,
             name: "Lacteos",
@@ -14,5 +14,5 @@ export function getIngredients() {
         }
     ];
 
-    return ingredients;
+    return esIngredients;
 }

@@ -1,0 +1,34 @@
+{
+    "footer": {
+        "home": "Home",
+        "fridge": "Fridge",
+        "search": "Search",
+        "favourites": "Favourites"
+    },
+    "dish": {
+        "cookTime": "Estimated processing time",
+        "ingredients": "Ingridients",
+        "steps": "Preparation per portion"
+    },
+    "dishes": {
+        "title": "My Fridge"
+    },
+    "fridge": {
+        "title": "Fridge"
+    },
+    "home": {
+        "headerHome": "What I cook",
+        "subHeaderHome": "Prepare your recipes with what you have on hand",
+        "headerFilter": "Time of preparation",
+        "subHeaderFilter": "Recipes ordered by the time of preparation",
+        "vegansTitle": "Vegans",
+        "vegansSubTitle": "Recetas elaboradas sin productos de origen animal",
+        "lessThan": "Less than",
+        "moreThan": "More than",
+        "between": "between",
+        "and": "and"
+    },
+    "searchBar": {
+        "placeholder": "Search your recipes"
+    }
+}

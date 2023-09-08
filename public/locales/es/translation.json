@@ -1,0 +1,34 @@
+{
+    "footer": {
+        "home": "Inicio",
+        "fridge": "Refrigerador",
+        "search": "Explorar",
+        "favourites": "Favoritos"
+    },
+    "dish": {
+        "cookTime": "Tiempo estimado de elaboración",
+        "ingredients": "Ingredientes",
+        "steps": "Preparación 1 porción"
+    },
+    "dishes": {
+        "title": "Mi Refrigerador"
+    },
+    "fridge": {
+        "title": "Refrigerador"
+    },
+    "home": {
+        "headerHome": "Qué cocino",
+        "subHeaderHome": "Elabora tus recetas con lo que tengas a mano",
+        "headerFilter": "Tiempo de elaboración",
+        "subHeaderFilter": "Recetas ordenadas por el tiempo de su elaboración",
+        "vegansTitle": "Veganas",
+        "vegansSubTitle": "Recetas elaboradas sin productos de origen animal",
+        "lessThan": "Menos de",
+        "moreThan": "Más de",
+        "between": "Entre",
+        "and": "y"
+    },
+    "searchBar": {
+        "placeholder": "Busca tus recetas"
+    }
+}

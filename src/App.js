@@ -1,4 +1,5 @@
 import React from 'react';
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -220,4 +221,11 @@ function App() {
   );
 }
 
-export default App;
+// here app catches the suspense from page in case translations are not yet loaded
+export default function WrappedApp() {
+  return (
+    <Suspense fallback="...is loading">
+      <App />
+    </Suspense>
+  );
+}
