@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 function Home({ dishes, onClickFilterTime,  onClickVegan}) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
 
     const cookTime = [
         {
@@ -46,7 +47,7 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
             <Link key={dish.id} to="/search/dish" onClick={() => onClickVegan(dish)}>
                 <div className="filter-button">
                     <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
-                    <div className="filter-text">{dish.name}</div>
+                    <div className="filter-text">{dish[l + 'Name']}</div>
                 </div>
             </Link>
         )

@@ -21,6 +21,7 @@ import { getIngredients } from './components/Fridge';
 
 function App() {
   const { t, i18n } = useTranslation();
+  const l = i18n.resolvedLanguage;
 
   const [dishes, setDishes] = useState(initializeFavorites(i18n.resolvedLanguage));
   const [dish, setDish] = useState(null);
@@ -73,8 +74,8 @@ function App() {
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
     dishes.forEach(dish => {
-      let count = countSimilars(selectedIngredients, dish.ingredients);
-      let aux = countSelectables(dish.ingredients, fridge);
+      let count = countSimilars(selectedIngredients, dish[l + 'Ingredients']);
+      let aux = countSelectables(dish[l + 'Ingredients'], fridge);
       let coincidenceRate = (count * 100) / aux;
       if (coincidenceRate > 65) coincidences.push(dish);
     });

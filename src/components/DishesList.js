@@ -3,14 +3,18 @@ import './DishesList.css';
 
 // Import Components
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 function DishesList({ dishes, filterText, selectDish, markAsFavorite }) {
+    const { i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
+
     const rows = [];
 
     dishes.forEach((dish, i) => {
         if (
-            dish.name.toLowerCase().indexOf(
+            dish[l + 'Name'].toLowerCase().indexOf(
                 filterText.toLowerCase()
             ) === -1
         ) {
@@ -22,9 +26,9 @@ function DishesList({ dishes, filterText, selectDish, markAsFavorite }) {
                     <Link to="/search/dish" style={{ width: "100%" }} onClick={() => selectDish(dish)}>
                         <div className="second-card-dish" style={{ backgroundImage: dish.image }}></div>
                         <div className="third-card-dish">
-                            <div id="name" className="h1-card">{dish.name}</div>
-                            <div className="h2-card">{dish.label}</div>
-                            <div className="h3-card">{dish.ingredients.join(", ")}</div>
+                            <div id="name" className="h1-card">{dish[l + 'Name']}</div>
+                            <div className="h2-card">{dish[l + 'Label']}</div>
+                            <div className="h3-card">{dish[l + 'Ingredients'].join(", ")}</div>
                         </div>
                     </Link>
                     <div

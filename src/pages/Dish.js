@@ -4,15 +4,16 @@ import { useTranslation } from 'react-i18next';
 import BackButton from "../components/BackButton";
 
 function Dish({ dish, markAsFavorite }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
 
-    const ingredients = dish.ingredients.map(item => {
+    const ingredients = dish[l + 'Ingredients'].map(item => {
         return (
             <p key={item} className="card-text">{item}</p>
         );
     });
 
-    const steps = dish.recipe.map((item, i) => {
+    const steps = dish[l + 'Recipe'].map((item, i) => {
         return (
             <div key={"c" + i} className="div-list">
                 <div className="content-item">
@@ -34,7 +35,7 @@ function Dish({ dish, markAsFavorite }) {
             </div>
             <div className="dish-body">
                 <div className="dish-body-div">
-                    <div className="dish-name">{dish.name}</div>
+                    <div className="dish-name">{dish[l + 'Name']}</div>
                     <img
                         className="img-favorite"
                         src={dish.favorite === true ? "images/icons/favorite-icon-selected.svg" : "images/icons/favorite-icon-unselected.svg"}
