@@ -22,7 +22,7 @@ import { getIngredients } from './components/Fridge';
 function App() {
   const { t, i18n } = useTranslation();
 
-  const [dishes, setDishes] = useState(initializeFavorites());
+  const [dishes, setDishes] = useState(initializeFavorites(i18n.resolvedLanguage));
   const [dish, setDish] = useState(null);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
