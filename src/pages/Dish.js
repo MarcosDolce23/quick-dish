@@ -7,9 +7,9 @@ function Dish({ dish, markAsFavorite }) {
     const { t, i18n } = useTranslation();
     const l = i18n.resolvedLanguage;
 
-    const ingredients = dish[l + 'Ingredients'].map(item => {
+    const ingredients = dish.ingredients.map(item => {
         return (
-            <p key={item} className="card-text">{item}</p>
+            <p key={item._id} className="card-text">{item[l + 'Name']}</p>
         );
     });
 

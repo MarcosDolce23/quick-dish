@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useDebugValue } from 'react';
 import { Suspense } from 'react';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import Axios from 'axios';
 
 // Import CSS
 import './App.css';
@@ -23,18 +25,46 @@ function App() {
   const { t, i18n } = useTranslation();
   const l = i18n.resolvedLanguage;
 
-  const [dishes, setDishes] = useState(initializeFavorites(i18n.resolvedLanguage));
+  const [dishes, setDishes] = useState([]);
   const [dish, setDish] = useState(null);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
+  const [fridge, setFridge] = useState([]);
+  // const fridge = getIngredients(i18n.resolvedLanguage);
 
-  const fridge = getIngredients(i18n.resolvedLanguage);
+  useEffect(() => {
+    Axios({
+      url: "http://localhost:4000/dishes/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setDishes(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+    Axios({
+      url: "http://localhost:4000/categories/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setFridge(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+  }, []);
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
   const countSimilars = (arrayA, arrayB) => {
     let matches = 0;
     for (let i = 0; i < arrayA.length; i++) {
-      if (arrayB.indexOf(arrayA[i]) !== -1)
+      // if (arrayB.indexOf(arrayA[i]) !== -1)
+      if (arrayB.some(e => e._id === arrayA[i]._id))
         matches++;
     }
     return matches;
@@ -45,7 +75,7 @@ function App() {
     let selectable = 0;
     ingredients.forEach(element => {
       for (let i = 0; i < fridge.length; i++) {
-        if (fridge[i].ingredients.includes(element)) {
+        if (fridge[i].ingredients.some(i => i._id === element._id)) {
           selectable += 1;
           break;
         }
@@ -74,8 +104,8 @@ function App() {
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
     dishes.forEach(dish => {
-      let count = countSimilars(selectedIngredients, dish[l + 'Ingredients']);
-      let aux = countSelectables(dish[l + 'Ingredients'], fridge);
+      let count = countSimilars(selectedIngredients, dish.ingredients);
+      let aux = countSelectables(dish.ingredients, fridge);
       let coincidenceRate = (count * 100) / aux;
       if (coincidenceRate > 65) coincidences.push(dish);
     });

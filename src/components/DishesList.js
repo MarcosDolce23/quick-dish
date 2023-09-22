@@ -28,7 +28,7 @@ function DishesList({ dishes, filterText, selectDish, markAsFavorite }) {
                         <div className="third-card-dish">
                             <div id="name" className="h1-card">{dish[l + 'Name']}</div>
                             <div className="h2-card">{dish[l + 'Label']}</div>
-                            <div className="h3-card">{dish[l + 'Ingredients'].join(", ")}</div>
+                            <div className="h3-card">{dish.ingredients.map(ingredient => ingredient[l + 'Name']).join(', ')}</div>
                         </div>
                     </Link>
                     <div

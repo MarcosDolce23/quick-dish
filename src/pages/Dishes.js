@@ -5,11 +5,12 @@ import DishesList from "../components/DishesList";
 import BackButton from "../components/BackButton";
 
 function Dishes({ ingredients, dishes, selectDish, markAsFavorite, handleInputChange, resetIngredients }) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
 
     const ingredientsList = ingredients.map(item => {
         return (
-            <div key={item} className="card-text" onClick={() => handleInputChange(item)} >{item}
+            <div key={item._id} className="card-text" onClick={() => handleInputChange(item)} >{item[l + 'Name']}
                 <div style={{ backgroundImage: "url(images/icons/delete-icon-x.png)" }} className="delete-icon"></div>
             </div>
         );
