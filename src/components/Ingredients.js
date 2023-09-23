@@ -24,7 +24,7 @@ function Ingredients({ value, ingredients, onChange }) {
                 return (
                     <div key={"1" + i} className="dropdown">
                         <div id={"drop" + i} onClick={(e) => collapsible(e)} className="dropbtn">
-                            <div id={"drop" + i} className="image-dropdown" style={{ backgroundImage: item.image }}></div>
+                            <div id={"drop" + i} className="image-dropdown" style={{ backgroundImage: "url(images/fridge/" + item.image + ")"}}></div>
                             <div id={"drop" + i} className="text-dropdown">{item[l + 'Name']}</div>
                             <div id={"drop" + i} className="arrow-dropdown" style={{ backgroundImage: "url(images/fridge/Arrow.png)" }}></div>
                         </div>
