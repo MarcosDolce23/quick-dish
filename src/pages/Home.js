@@ -59,7 +59,7 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
                 <div className="header-home">{t('home.headerHome')}</div>
                 <div className="sub-header">{t('home.subHeaderHome')}</div>
                 <Link to="/fridge">
-                    <img src="images/my-refrigerator.png" alt="My refrigerator" style={{ width: "100%" }}></img>
+                    <img src={"images/" + l + "MyFridge.png"} alt="My refrigerator" style={{ width: "100%" }}></img>
                 </Link>
                 <div className="header-filter">{t('home.headerFilter')}</div>
                 <div className="sub-header">{t('home.subHeaderFilter')}</div>
