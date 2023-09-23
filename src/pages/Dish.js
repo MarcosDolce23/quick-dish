@@ -31,7 +31,7 @@ function Dish({ dish, markAsFavorite }) {
         <div className="main-div">
             <BackButton></BackButton>
             <div>
-                <img src={dish.headerImage} alt="Header" style={{ width: "100%" }}></img>
+                <img src={"/images/dishes/" + dish.headerImage} alt="Header" style={{ width: "100%" }}></img>
             </div>
             <div className="dish-body">
                 <div className="dish-body-div">
