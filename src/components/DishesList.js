@@ -24,7 +24,7 @@ function DishesList({ dishes, filterText, selectDish, markAsFavorite }) {
             <div key={"1" + i} className="dish-card">
                 <div className="main-card-dish">
                     <Link to="/search/dish" style={{ width: "100%" }} onClick={() => selectDish(dish)}>
-                        <div className="second-card-dish" style={{ backgroundImage: dish.image }}></div>
+                        <div className="second-card-dish" style={{ backgroundImage: "url(images/dishes/" + dish.image + ")" }}></div>
                         <div className="third-card-dish">
                             <div id="name" className="h1-card">{dish[l + 'Name']}</div>
                             <div className="h2-card">{dish[l + 'Label']}</div>
