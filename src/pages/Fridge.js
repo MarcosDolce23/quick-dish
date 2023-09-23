@@ -16,7 +16,7 @@ function Fridge({value, ingredients, coincidences, onChange}) {
                 <Ingredients
                     value={value}
                     ingredients={ingredients}
-                    onChange={(beverage) => onChange(beverage)}
+                    onChange={(ingredient) => onChange(ingredient)}
                 ></Ingredients>
             </div>
             <div className="dishes-button">

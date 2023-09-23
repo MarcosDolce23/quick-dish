@@ -44,7 +44,7 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
         if (!dish.vegan)
             return;
         return (
-            <Link key={dish.id} to="/search/dish" onClick={() => onClickVegan(dish)}>
+            <Link key={dish._id} to="/search/dish" onClick={() => onClickVegan(dish)}>
                 <div className="filter-button">
                     <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
                     <div className="filter-text">{dish[l + 'Name']}</div>
