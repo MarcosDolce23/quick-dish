@@ -1,9 +1,7 @@
 import React, { useDebugValue } from 'react';
 import { Suspense } from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Axios from 'axios';
 import env from 'react-dotenv';
 
 // Import CSS
@@ -32,21 +30,6 @@ function App() {
   const [filterCriteria, setFilterCriteria] = useState(null);
   const [fridge, setFridge] = useState([]);
   // const fridge = getIngredients(i18n.resolvedLanguage);
-
-  useEffect(() => {
-    Axios({
-      url: "https://dish-crud-express.onrender.com/categories/",
-    })
-      .then((response) => {
-        // setIsLoaded(true);
-        setFridge(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        // setIsLoaded(true);
-        // setError(error);
-      });
-  }, []);
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
   const countSimilars = (arrayA, arrayB) => {
@@ -173,6 +156,7 @@ function App() {
             value={selectedIngredients}
             coincidences={returnCoincidences()}
             ingredients={fridge}
+            setFridge={setFridge}
             onChange={(ingredient) => toggleIngredients(ingredient)}
           />
         </Route>
