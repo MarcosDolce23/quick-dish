@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     Axios({
-      url: env.API_URL + "/dishes/",
+      url: "https://dish-crud-express.onrender.com/dishes/",
     })
       .then((response) => {
         // setIsLoaded(true);
@@ -47,7 +47,7 @@ function App() {
         // setError(error);
       });
     Axios({
-      url: env.API_URL + "/categories/",
+      url: "https://dish-crud-express.onrender.com/categories/",
     })
       .then((response) => {
         // setIsLoaded(true);
