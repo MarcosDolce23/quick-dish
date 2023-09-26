@@ -35,18 +35,6 @@ function App() {
 
   useEffect(() => {
     Axios({
-      url: "https://dish-crud-express.onrender.com/dishes/",
-    })
-      .then((response) => {
-        // setIsLoaded(true);
-        setDishes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        // setIsLoaded(true);
-        // setError(error);
-      });
-    Axios({
       url: "https://dish-crud-express.onrender.com/categories/",
     })
       .then((response) => {
@@ -175,6 +163,7 @@ function App() {
         <Route exact path="/">
           <Home
             dishes={dishes}
+            setDishes={setDishes}
             onClickFilterTime={(filter) => updateFilterCriteria(filter)}
             onClickVegan={selectDish}
           />
