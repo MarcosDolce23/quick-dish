@@ -6,8 +6,8 @@
   "main": "index.js",
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-dotenv && react-scripts start",
+    "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,11 +50,15 @@
     "i18next-http-backend": "^2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dotenv": "^0.1.3",
     "react-i18next": "^13.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
     "rimraf": "^5.0.1",
     "typeface-roboto": "^1.1.13",
     "web-vitals": "^2.1.4"
+  },
+  "react-dotenv": {
+    "whitelist": ["API_URL"]
   }
 }
