@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'typeface-roboto';
 
+import './i18n';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // Since scr/index.js file is the entry point we need to tweak it a bit so that the react dom loads after the “deviceready” event has been fired by cordova.

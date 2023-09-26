@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useDebugValue } from 'react';
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import Axios from 'axios';
+import env from 'react-dotenv';
 
 // Import CSS
 import './App.css';
@@ -19,19 +23,49 @@ import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
 
 function App() {
+  const { t, i18n } = useTranslation();
+  const l = i18n.resolvedLanguage;
 
-  const [dishes, setDishes] = useState(initializeFavorites());
+  const [dishes, setDishes] = useState([]);
   const [dish, setDish] = useState(null);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
+  const [fridge, setFridge] = useState([]);
+  // const fridge = getIngredients(i18n.resolvedLanguage);
 
-  const fridge = getIngredients();
+  useEffect(() => {
+    Axios({
+      url: env.API_URL + "/dishes/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setDishes(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+    Axios({
+      url: env.API_URL + "/categories/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setFridge(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+  }, []);
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
   const countSimilars = (arrayA, arrayB) => {
     let matches = 0;
     for (let i = 0; i < arrayA.length; i++) {
-      if (arrayB.indexOf(arrayA[i]) !== -1)
+      // if (arrayB.indexOf(arrayA[i]) !== -1)
+      if (arrayB.some(e => e._id === arrayA[i]._id))
         matches++;
     }
     return matches;
@@ -42,7 +76,7 @@ function App() {
     let selectable = 0;
     ingredients.forEach(element => {
       for (let i = 0; i < fridge.length; i++) {
-        if (fridge[i].ingredients.includes(element)) {
+        if (fridge[i].ingredients.some(i => i._id === element._id)) {
           selectable += 1;
           break;
         }
@@ -94,9 +128,9 @@ function App() {
     setDish(sel);
   };
 
-  const setFavorite = (obj, name, val) => {
+  const setFavorite = (obj, id, val) => {
     for (let i in obj) {
-      if (obj[i].name === name) {
+      if (obj[i].id === id) {
         obj[i].favorite = val;
         break; //Stop this loop, we found it!
       }
@@ -158,7 +192,7 @@ function App() {
             dishes={filterCriteria === null ? dishes : dishes.filter(filterByCookTime(filterCriteria))}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            title={"Explorar"}
+            title={t('footer.search')}
           />
         </Route>
         <Route exact path="/favorites">
@@ -166,7 +200,7 @@ function App() {
             dishes={dishes.filter(e => e.favorite === true)}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            title={"Favoritos"}
+            title={t('footer.favourites')}
           />
         </Route>
         <Route exact path="/search/dish">
@@ -188,27 +222,28 @@ function App() {
       </Switch>
       <div className="footer">
         <ButtonFooter
-          label="Inicio"
+          label={t('footer.home')}
           to="/"
           activeOnlyWhenExact={true}
           onClickFooter={() => resetIngredients()}
           imagen="images/icons/home.png"
         />
         <ButtonFooter
-          label="Refrigerador"
+          label={t('footer.fridge')}
           to="/fridge"
           activeOnlyWhenExact={false}
           imagen="images/icons/refrigerator.png"
         />
         <ButtonFooter
-          label="Explorar"
+          label={t('footer.search')}
           to="/search"
           activeOnlyWhenExact={false}
           onClickFooter={() => updateFilterCriteria(null)}
           imagen="images/icons/search.png"
         />
         <ButtonFooter
-          label="Favoritos"
+          // label="Favoritos"
+          label={t('footer.favourites')}
           to="/favorites"
           activeOnlyWhenExact={true}
           imagen="images/icons/favorites.png"
@@ -218,4 +253,11 @@ function App() {
   );
 }
 
-export default App;
+// here app catches the suspense from page in case translations are not yet loaded
+export default function WrappedApp() {
+  return (
+    <Suspense fallback="...is loading">
+      <App />
+    </Suspense>
+  );
+}

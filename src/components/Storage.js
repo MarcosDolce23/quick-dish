@@ -1,18 +1,33 @@
-export function initializeFavorites() {
+export function initializeFavorites(locale) {
 
    let dishes = [
       {
          id: 1,
-         name: "Ensalada de Queso",
-         label: "refrescante",
-         ingredients: [
+         esName: "Ensalada de Queso",
+         enName: "Ensalada de Queso",
+         esLabel: "refrescante",
+         esLabel: "refrescante",
+         esIngredients: [
+            "Leche",
+            "Cebolla",
+            "Queso"
+         ],
+         enIngredients: [
             "Leche",
             "Cebolla",
             "Queso"
          ],
          cookTime: 30,
          vegan: false,
-         recipe: [
+         esRecipe: [
+            "Verter en una coctelera 60ml Tequila.",
+            "Agregar 60ml Ron Blanco.",
+            "Agregar 60ml de Jugo de Naranja y trozos de Hielo.",
+            "Agitar fuerte.",
+            "Pasar la Naranja por el borde de la copa y colocarla boca abajo en un plato con azúcar, para realizar un escarchado.",
+            "Vertir la mezcla de la coctelera en la copa."
+         ],
+         enRecipe: [
             "Verter en una coctelera 60ml Tequila.",
             "Agregar 60ml Ron Blanco.",
             "Agregar 60ml de Jugo de Naranja y trozos de Hielo.",
@@ -26,9 +41,17 @@ export function initializeFavorites() {
       },
       {
          id: 2,
-         name: "Ensalada de Berenjena",
-         label: "refrescante",
-         ingredients: [
+         esName: "Ensalada de Berenjena",
+         enName: "Ensalada de Berenjena",
+         esLabel: "refrescante",
+         enLabel: "refrescante",
+         esIngredients: [
+            "Bereneja",
+            "Cebolla",
+            "Lechuga",
+            "Crema"
+         ],
+         enIngredients: [
             "Bereneja",
             "Cebolla",
             "Lechuga",
@@ -36,7 +59,15 @@ export function initializeFavorites() {
          ],
          vegan: true,
          cookTime: 15,
-         recipe: [
+         esRecipe: [
+            "Verter el 33% de una jarra con Jugo de Naranja natural.",
+            "Agregar un 16% de Ginebra.",
+            "Agregar otro 16% de Vodka.",
+            "Incorporar un 33% de Champagne",
+            "Revolver suavemente.",
+            "Trasladar a la nevera donde la dejamos enfriar por un espacio de una hora antes de servir."
+         ],
+         enRecipe: [
             "Verter el 33% de una jarra con Jugo de Naranja natural.",
             "Agregar un 16% de Ginebra.",
             "Agregar otro 16% de Vodka.",
@@ -49,11 +80,11 @@ export function initializeFavorites() {
          favorite: false
       }
    ];
-   
-   let storage = window.localStorage;
 
+   let storage = window.localStorage;
+   
    for (let i in dishes) {
-      let value = storage.getItem(dishes[i].name);
+      let value = storage.getItem(dishes[i].id);
       if (value) {
          dishes[i].favorite = true;
       }

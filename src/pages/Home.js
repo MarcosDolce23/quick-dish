@@ -1,7 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 function Home({ dishes, onClickFilterTime,  onClickVegan}) {
+    const { t, i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
+
     const cookTime = [
         {
             time: 20,
@@ -24,12 +28,12 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
                     <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
                     {
                         i === 0 ?
-                            <div className="filter-text">Menos de {item.time} min</div>
+                            <div className="filter-text">{t('home.lessThan')} {item.time} min</div>
                             :
                             i === a.length - 1 ?
-                                <div className="filter-text">Más de {item.time} min</div>
+                                <div className="filter-text">{t('home.moreThan')} {item.time} min</div>
                                 :
-                                <div className="filter-text">Entre {item.time} min y {a[i + 1].time} min</div>
+                                <div className="filter-text">{t('home.between')} {item.time} min {t('home.and')} {a[i + 1].time} min</div>
                     }
                 </div>
             </Link>
@@ -40,10 +44,10 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
         if (!dish.vegan)
             return;
         return (
-            <Link key={dish.id} to="/search/dish" onClick={() => onClickVegan(dish)}>
+            <Link key={dish._id} to="/search/dish" onClick={() => onClickVegan(dish)}>
                 <div className="filter-button">
                     <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
-                    <div className="filter-text">{dish.name}</div>
+                    <div className="filter-text">{dish[l + 'Name']}</div>
                 </div>
             </Link>
         )
@@ -52,18 +56,18 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
     return (
         <div className="main-div">
             <div className="main-container">
-                <div className="header-home">Qué cocino</div>
-                <div className="sub-header">Elabora tus recetas con lo que tengas a mano</div>
+                <div className="header-home">{t('home.headerHome')}</div>
+                <div className="sub-header">{t('home.subHeaderHome')}</div>
                 <Link to="/fridge">
-                    <img src="images/my-refrigerator.png" alt="My refrigerator" style={{ width: "100%" }}></img>
+                    <img src={"images/" + l + "MyFridge.png"} alt="My refrigerator" style={{ width: "100%" }}></img>
                 </Link>
-                <div className="header-filter">Tiempo de elaboración</div>
-                <div className="sub-header">Recetas ordenadas por el tiempo de su elaboración</div>
+                <div className="header-filter">{t('home.headerFilter')}</div>
+                <div className="sub-header">{t('home.subHeaderFilter')}</div>
                 <div className="filter-container">
                     {timeCookingRows}
                 </div>
-                <div className="header-filter">Veganas</div>
-                <div className="sub-header">Recetas elaboradas sin productos de origen animal</div>
+                <div className="header-filter">{t('home.vegansTitle')}</div>
+                <div className="sub-header">{t('home.vegansSubTitle')}</div>
                 <div className="filter-container">
                     {veganDishes}
                 </div>
