@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useDebugValue } from 'react';
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import Axios from 'axios';
 
 // Import CSS
 import './App.css';
@@ -9,7 +12,6 @@ import './App.css';
 import Home from './pages/Home';
 import Fridge from './pages/Fridge';
 import Search from './pages/Search';
-import Favorites from './pages/Favorites';
 import Dish from './pages/Dish';
 import Dishes from './pages/Dishes';
 
@@ -20,78 +22,100 @@ import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
 
 function App() {
+  const { t, i18n } = useTranslation();
+  const l = i18n.resolvedLanguage;
 
-  const [dishes, setDishes] = useState(initializeFavorites());
-  const [ingredientsList, setIngredientsList] = useState([]);
-  const [ingredientsCount, setIngredientesCount] = useState(0);
-  const [coincidences, setCoincidences] = useState([]);
+  const [dishes, setDishes] = useState([]);
   const [dish, setDish] = useState(null);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState(null);
-  const fridge = getIngredients();
+  const [fridge, setFridge] = useState([]);
+  // const fridge = getIngredients(i18n.resolvedLanguage);
 
-  //Buscar un nombre descriptivo para este método.
-  const handleInputChange = (ingredient) => {
-    //Esta función compara cuantos elementos coinciden entres dos arrays 
-    function countSimilars(arrayA, arrayB) {
-      var matches = 0;
-      for (var i = 0; i < arrayA.length; i++) {
-        if (arrayB.indexOf(arrayA[i]) !== -1)
-          matches++;
-      }
-      return matches;
-    }
-
-    // Esta función cuenta cuantos ingredientes del plato pueden ser seleccionados de la heladera (no todos los ingredientes de un plato son elegibles)
-    function countSelectables(dishIngredients, fridge) {
-      let selectable = 0;
-      dishIngredients.forEach(element => {
-        for (var i = 0; i < fridge.length; i++) {
-          if (fridge[i].ingredients.includes(element)) {
-            selectable += 1;
-            break;
-          }
-        }
+  useEffect(() => {
+    Axios({
+      url: "http://localhost:4000/dishes/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setDishes(response.data);
       })
-      return selectable;
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+    Axios({
+      url: "http://localhost:4000/categories/",
+    })
+      .then((response) => {
+        // setIsLoaded(true);
+        setFridge(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoaded(true);
+        // setError(error);
+      });
+  }, []);
+
+  //Esta función compara cuantos elementos coinciden entres dos arrays 
+  const countSimilars = (arrayA, arrayB) => {
+    let matches = 0;
+    for (let i = 0; i < arrayA.length; i++) {
+      // if (arrayB.indexOf(arrayA[i]) !== -1)
+      if (arrayB.some(e => e._id === arrayA[i]._id))
+        matches++;
     }
+    return matches;
+  };
 
-    let ingredientsCount = 0;
-    let ingredients = ingredientsList;
-    let coincidences = [];
-    let dishesAux = dishes.map(a => ({ ...a })); //hago una copia de dishes
-    let fridgeAux = fridge.map(a => ({ ...a })); //hago una copia de dishes
+  // Esta función cuenta cuantos ingredientes del plato pueden ser seleccionados de la heladera (no todos los ingredientes de un plato son elegibles)
+  const countSelectables = (ingredients, fridge) => {
+    let selectable = 0;
+    ingredients.forEach(element => {
+      for (let i = 0; i < fridge.length; i++) {
+        if (fridge[i].ingredients.some(i => i._id === element._id)) {
+          selectable += 1;
+          break;
+        }
+      }
+    })
+    return selectable;
+  };
 
+  // Selecciona/Deselecciona ingredientes
+  const toggleIngredients = (ingredient) => {
+    let ingredients = selectedIngredients.slice();
     //Agrego el ingrediente elegido a la lista y si ya existe lo quito
     if (ingredients.includes(ingredient)) {
       ingredients = ingredients.filter(e => e !== ingredient);
     } else {
       ingredients.push(ingredient);
     }
+    setSelectedIngredients(ingredients);
+  };
+
+  //Buscar un nombre descriptivo para este método.
+  const returnCoincidences = () => {
+    let coincidences = [];
 
     // 1º Por cada plato cuento cuantos ingrediente coinciden con los elegidos
     // 2º Obtengo el total de ingredientes elegibles del plato
     // 3º Obtengo el porcentaje de coincidencia
-    dishesAux.forEach(element => {
-      let count = countSimilars(ingredients, element.ingredients);
-      let aux = countSelectables(element.ingredients, fridgeAux);
+    dishes.forEach(dish => {
+      let count = countSimilars(selectedIngredients, dish.ingredients);
+      let aux = countSelectables(dish.ingredients, fridge);
       let coincidenceRate = (count * 100) / aux;
-      if (coincidenceRate > 65) {
-        ingredientsCount++;
-        coincidences.push(element);
-        element.coincidences = count; //Agregar esta propiedad a las recetas
-      }
+      if (coincidenceRate > 65) coincidences.push(dish);
     });
 
-    setIngredientsList(ingredients);
-    setIngredientesCount(ingredientsCount);
-    setCoincidences(coincidences);
+    return coincidences;
   };
 
   //Reinicio los ingredientes a vacío.
   const resetIngredients = () => {
-    setIngredientsList([]);
-    setIngredientesCount(0);
-    setCoincidences([]);
+    setSelectedIngredients([]);
   };
 
   //Este método indica que filtro se usará para los platos a mostrar
@@ -99,46 +123,34 @@ function App() {
     setFilterCriteria(filter);
   };
 
-  //Selecciona un plato
   const selectDish = (sel) => {
     setDish(sel);
   };
 
-  // Método para guardar los platos favoritos.
-  // En la versión anterior había creado dos métodos por algún motivo que no recuerdo
-  // así que eliminé uno de los dos pero no estoy seguro si esto puede causar errores.
-  const markAsFavorite = (fav) => {
-
-    function setFavorite(obj, name, val) {
-      for (var i in obj) {
-        if (obj[i].name === name) {
-          obj[i].favorite = val;
-          break; //Stop this loop, we found it!
-        }
+  const setFavorite = (obj, id, val) => {
+    for (let i in obj) {
+      if (obj[i].id === id) {
+        obj[i].favorite = val;
+        break; //Stop this loop, we found it!
       }
     }
+  }
 
-    let dishesAux = dishes.map(a => ({ ...a }));
-    let coincidencesAux = coincidences.map(a => ({ ...a }));
-    let dishAux = dish;
-
+  // Método para guardar los platos favoritos.
+  const markAsFavorite = (fav) => {
+    let dishesList = dishes.slice();
     let storage = window.localStorage;
     let value = storage.getItem(fav);
+
     if (value) {
       storage.removeItem(fav)
-      if (dishAux) dishAux.favorite = false;
-      setFavorite(dishesAux, fav, false);
-      setFavorite(coincidencesAux, fav, false);
+      setFavorite(dishesList, fav, false);
     } else {
       storage.setItem(fav, true)
-      if (dishAux) dishAux.favorite = true;
-      setFavorite(dishesAux, fav, true);
-      setFavorite(coincidencesAux, fav, true);
+      setFavorite(dishesList, fav, true);
     }
 
-    setDishes(dishesAux);
-    setCoincidences(coincidencesAux);
-    setDish(dishAux);
+    setDishes(dishesList);
   };
 
   //Filtrar tragos por tiempo de preparación
@@ -156,39 +168,22 @@ function App() {
     }
   };
 
-  const filterDishes = (e) => {
-    var filter = e.target.value.toUpperCase();
-
-    var divs = document.getElementsByClassName("dish-card");
-    for (var i = 0; i < divs.length; i++) {
-      var a = divs[i].getElementsByClassName("h1-card")[0];
-
-      if (a) {
-        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-          divs[i].style.display = "";
-        } else {
-          divs[i].style.display = "none";
-        }
-      }
-    }
-
-  };
-
   return (
     <Router>
       <Switch>
         <Route exact path="/">
           <Home
-            onClick={(filter) => updateFilterCriteria(filter)}
+            dishes={dishes}
+            onClickFilterTime={(filter) => updateFilterCriteria(filter)}
+            onClickVegan={selectDish}
           />
         </Route>
         <Route exact path="/fridge">
           <Fridge
-            value={ingredientsList}
-            ingredientsCount={ingredientsCount}
-            coincidences={coincidences}
+            value={selectedIngredients}
+            coincidences={returnCoincidences()}
             ingredients={fridge}
-            onChange={(ingredient) => handleInputChange(ingredient)}
+            onChange={(ingredient) => toggleIngredients(ingredient)}
           />
         </Route>
         <Route exact path="/search">
@@ -196,15 +191,15 @@ function App() {
             dishes={filterCriteria === null ? dishes : dishes.filter(filterByCookTime(filterCriteria))}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            filterDishes={(e) => filterDishes(e)}
+            title={t('footer.search')}
           />
         </Route>
         <Route exact path="/favorites">
-          <Favorites
+          <Search
             dishes={dishes.filter(e => e.favorite === true)}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            filterDishes={(e) => filterDishes(e)}
+            title={t('footer.favourites')}
           />
         </Route>
         <Route exact path="/search/dish">
@@ -215,38 +210,39 @@ function App() {
         </Route>
         <Route exact path="/fridge/dishes">
           <Dishes
-            ingredients={ingredientsList}
-            dishes={coincidences.sort((a, b) => { return b.coincidences - a.coincidences })}
+            ingredients={selectedIngredients}
+            dishes={returnCoincidences().sort((a, b) => { return b.coincidences - a.coincidences })}
             selectDish={(sel) => selectDish(sel)}
             markAsFavorite={(fav) => markAsFavorite(fav)}
-            handleInputChange={(ingredient) => handleInputChange(ingredient)}
+            toggleIngredients={(ingredient) => toggleIngredients(ingredient)}
             resetIngredients={() => resetIngredients()}
           />
         </Route>
       </Switch>
       <div className="footer">
         <ButtonFooter
-          label="Inicio"
+          label={t('footer.home')}
           to="/"
           activeOnlyWhenExact={true}
           onClickFooter={() => resetIngredients()}
           imagen="images/icons/home.png"
         />
         <ButtonFooter
-          label="Refrigerador"
+          label={t('footer.fridge')}
           to="/fridge"
           activeOnlyWhenExact={false}
           imagen="images/icons/refrigerator.png"
         />
         <ButtonFooter
-          label="Explorar"
+          label={t('footer.search')}
           to="/search"
           activeOnlyWhenExact={false}
           onClickFooter={() => updateFilterCriteria(null)}
           imagen="images/icons/search.png"
         />
         <ButtonFooter
-          label="Favoritos"
+          // label="Favoritos"
+          label={t('footer.favourites')}
           to="/favorites"
           activeOnlyWhenExact={true}
           imagen="images/icons/favorites.png"
@@ -256,4 +252,11 @@ function App() {
   );
 }
 
-export default App;
+// here app catches the suspense from page in case translations are not yet loaded
+export default function WrappedApp() {
+  return (
+    <Suspense fallback="...is loading">
+      <App />
+    </Suspense>
+  );
+}

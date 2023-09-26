@@ -1,25 +1,24 @@
 import React from "react";
 import DishesList from "../components/DishesList";
 import BackButton from "../components/BackButton";
+import SearchBar from "../components/SearchBar";
+import { useState } from "react";
 
-function Search({dishes, selectDish, markAsFavorite, filterDishes}) {
+function Search({ dishes, selectDish, markAsFavorite, title }) {
+
+    const [filterText, setFilterText] = useState('');
+
     return (
         <div className="main-div">
             <BackButton></BackButton>
-            <div className="title">Explorar</div>
+            <div className="title">{title}</div>
             <div className="main-container">
-                <div className="search-container">
-                    <div className="text">
-                        <input
-                            type="text"
-                            placeholder="Busca tus recetas"
-                            className="input"
-                            onChange={(e) => filterDishes(e)}>
-                        </input>
-                    </div>
-                </div>
+                <SearchBar 
+                    filterText={filterText} 
+                    onFilterTextChange={setFilterText} />
                 <DishesList
-                    dishes={dishes.sort((a, b) => a.name.localeCompare(b.name))}
+                    dishes={dishes}
+                    filterText={filterText}
                     selectDish={(sel) => selectDish(sel)}
                     markAsFavorite={(fav) => markAsFavorite(fav)}
                 ></DishesList>
