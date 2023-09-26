@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Axios from 'axios';
+import env from 'react-dotenv';
 
 // Import CSS
 import './App.css';
@@ -34,7 +35,7 @@ function App() {
 
   useEffect(() => {
     Axios({
-      url: "http://localhost:4000/dishes/",
+      url: env.API_URL + "/dishes/",
     })
       .then((response) => {
         // setIsLoaded(true);
@@ -46,7 +47,7 @@ function App() {
         // setError(error);
       });
     Axios({
-      url: "http://localhost:4000/categories/",
+      url: env.API_URL + "/categories/",
     })
       .then((response) => {
         // setIsLoaded(true);
