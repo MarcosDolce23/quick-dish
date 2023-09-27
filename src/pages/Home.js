@@ -72,7 +72,7 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
     });
     if (error) {
         return <div>Error</div>
-    } else if (!isLoaded) {
+    } else if (isLoaded) {
         return <Loader></Loader>
     } else {
         return (
