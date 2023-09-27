@@ -1,9 +1,7 @@
 import React, { useDebugValue } from 'react';
 import { Suspense } from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import Axios from 'axios';
 import env from 'react-dotenv';
 
 // Import CSS
@@ -21,6 +19,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import ButtonFooter from './components/ButtonFooter';
 import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
+import Loader from './components/Loader';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -32,33 +31,6 @@ function App() {
   const [filterCriteria, setFilterCriteria] = useState(null);
   const [fridge, setFridge] = useState([]);
   // const fridge = getIngredients(i18n.resolvedLanguage);
-
-  useEffect(() => {
-    Axios({
-      url: "https://dish-crud-express.onrender.com/dishes/",
-    })
-      .then((response) => {
-        // setIsLoaded(true);
-        setDishes(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        // setIsLoaded(true);
-        // setError(error);
-      });
-    Axios({
-      url: "https://dish-crud-express.onrender.com/categories/",
-    })
-      .then((response) => {
-        // setIsLoaded(true);
-        setFridge(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-        // setIsLoaded(true);
-        // setError(error);
-      });
-  }, []);
 
   //Esta función compara cuantos elementos coinciden entres dos arrays 
   const countSimilars = (arrayA, arrayB) => {
@@ -175,6 +147,7 @@ function App() {
         <Route exact path="/">
           <Home
             dishes={dishes}
+            setDishes={setDishes}
             onClickFilterTime={(filter) => updateFilterCriteria(filter)}
             onClickVegan={selectDish}
           />
@@ -184,6 +157,7 @@ function App() {
             value={selectedIngredients}
             coincidences={returnCoincidences()}
             ingredients={fridge}
+            setFridge={setFridge}
             onChange={(ingredient) => toggleIngredients(ingredient)}
           />
         </Route>
@@ -256,7 +230,7 @@ function App() {
 // here app catches the suspense from page in case translations are not yet loaded
 export default function WrappedApp() {
   return (
-    <Suspense fallback="...is loading">
+    <Suspense fallback={<Loader></Loader>}>
       <App />
     </Suspense>
   );

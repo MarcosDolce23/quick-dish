@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
+import Loader from '../components/Loader';
 
-function Home({ dishes, onClickFilterTime,  onClickVegan}) {
+function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
     const { t, i18n } = useTranslation();
     const l = i18n.resolvedLanguage;
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        Axios({
+            url: env.API_URL + "/dishes/",
+        })
+            .then((response) => {
+                setIsLoaded(true);
+                setDishes(response.data);
+            })
+            .catch((error) => {
+                setIsLoaded(true);
+                setError(error);
+            });
+    }, []);
 
     const cookTime = [
         {
@@ -52,28 +70,33 @@ function Home({ dishes, onClickFilterTime,  onClickVegan}) {
             </Link>
         )
     });
-
-    return (
-        <div className="main-div">
-            <div className="main-container">
-                <div className="header-home">{t('home.headerHome')}</div>
-                <div className="sub-header">{t('home.subHeaderHome')}</div>
-                <Link to="/fridge">
-                    <img src={"images/" + l + "MyFridge.png"} alt="My refrigerator" style={{ width: "100%" }}></img>
-                </Link>
-                <div className="header-filter">{t('home.headerFilter')}</div>
-                <div className="sub-header">{t('home.subHeaderFilter')}</div>
-                <div className="filter-container">
-                    {timeCookingRows}
-                </div>
-                <div className="header-filter">{t('home.vegansTitle')}</div>
-                <div className="sub-header">{t('home.vegansSubTitle')}</div>
-                <div className="filter-container">
-                    {veganDishes}
+    if (error) {
+        return <div>Error</div>
+    } else if (!isLoaded) {
+        return <Loader></Loader>
+    } else {
+        return (
+            <div className="main-div">
+                <div className="main-container">
+                    <div className="header-home">{t('home.headerHome')}</div>
+                    <div className="sub-header">{t('home.subHeaderHome')}</div>
+                    <Link to="/fridge">
+                        <img src={"images/" + l + "MyFridge.png"} alt="My refrigerator" style={{ width: "100%" }}></img>
+                    </Link>
+                    <div className="header-filter">{t('home.headerFilter')}</div>
+                    <div className="sub-header">{t('home.subHeaderFilter')}</div>
+                    <div className="filter-container">
+                        {timeCookingRows}
+                    </div>
+                    <div className="header-filter">{t('home.vegansTitle')}</div>
+                    <div className="sub-header">{t('home.vegansSubTitle')}</div>
+                    <div className="filter-container">
+                        {veganDishes}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default Home;
