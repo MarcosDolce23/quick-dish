@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import Loader from '../components/Loader';
 
 function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
     const { t, i18n } = useTranslation();
@@ -72,7 +73,7 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
     if (error) {
         return <div>Error</div>
     } else if (!isLoaded) {
-        return <div>Is loading</div>
+        return <Loader></Loader>
     } else {
         return (
             <div className="main-div">
