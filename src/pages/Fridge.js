@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 import BackButton from "../components/BackButton";
 import Ingredients from "../components/Ingredients";
+import Loader from "../components/Loader";
 
 function Fridge({ value, ingredients, setFridge, coincidences, onChange }) {
     const { t } = useTranslation();
@@ -28,7 +29,7 @@ function Fridge({ value, ingredients, setFridge, coincidences, onChange }) {
     if (error) {
         return <div>Error</div>
     } else if (!isLoaded) {
-        return <did>Loading...</did>
+        return <Loader></Loader>
     } else {
         return (
             <div className="main-div">

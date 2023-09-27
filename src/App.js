@@ -19,6 +19,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import ButtonFooter from './components/ButtonFooter';
 import { initializeFavorites } from './components/Storage';
 import { getIngredients } from './components/Fridge';
+import Loader from './components/Loader';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -229,7 +230,7 @@ function App() {
 // here app catches the suspense from page in case translations are not yet loaded
 export default function WrappedApp() {
   return (
-    <Suspense fallback="...is loading">
+    <Suspense fallback={<Loader></Loader>}>
       <App />
     </Suspense>
   );
