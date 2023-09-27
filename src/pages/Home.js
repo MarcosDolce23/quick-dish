@@ -12,7 +12,7 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
 
     useEffect(() => {
         Axios({
-            url: env.API_URL + "/dishes/",
+            url: "https://dish-crud-express.onrender.com/dishes/",
         })
             .then((response) => {
                 setIsLoaded(true);
