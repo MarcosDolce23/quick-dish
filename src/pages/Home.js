@@ -22,7 +22,7 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
                 setIsLoaded(true);
                 setError(error);
             });
-    });
+    }, []);
 
     const cookTime = [
         {

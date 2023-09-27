@@ -24,7 +24,7 @@ function Fridge({ value, ingredients, setFridge, coincidences, onChange }) {
                 setIsLoaded(true);
                 setError(true);
             });
-    });
+    }, []);
 
     if (error) {
         return <div>Error</div>
