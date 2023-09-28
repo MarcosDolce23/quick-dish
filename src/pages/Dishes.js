@@ -4,17 +4,19 @@ import { useTranslation } from 'react-i18next';
 import DishesList from "../components/DishesList";
 import BackButton from "../components/BackButton";
 
-function Dishes({ ingredients, dishes, selectDish, markAsFavorite, toggleIngredients, resetIngredients }) {
-    const { t, i18n } = useTranslation();
-    const l = i18n.resolvedLanguage;
-
-    const ingredientsList = ingredients.map(item => {
+const IngredientsList = (ingredients) => {
+    ingredients.map(item => {
         return (
             <div key={item._id} className="card-text" onClick={() => toggleIngredients(item)} >{item[l + 'Name']}
                 <div style={{ backgroundImage: "url(images/icons/delete-icon-x.png)" }} className="delete-icon"></div>
             </div>
         );
     });
+}
+
+function Dishes({ ingredients, dishes, selectDish, markAsFavorite, toggleIngredients, resetIngredients }) {
+    const { t, i18n } = useTranslation();
+    const l = i18n.resolvedLanguage;
 
     return (
         <div className="main-div" style={{ paddingBottom: "40%" }}>
@@ -23,7 +25,7 @@ function Dishes({ ingredients, dishes, selectDish, markAsFavorite, toggleIngredi
             <div className="main-container">
                 <img src="images/icons/delete-icon.svg" alt="delete" className="delete-image" onClick={() => resetIngredients()}></img>
                 <div className="card-dishes">
-                    {ingredientsList}
+                    <IngredientsList ingredients={ingredients} />
                 </div>
                 <DishesList
                     dishes={dishes}
