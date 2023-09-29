@@ -40,7 +40,12 @@ function Dish({ dish, markAsFavorite }) {
     const { t, i18n } = useTranslation();
     const l = i18n.resolvedLanguage;
 
-
+    if (!dish)
+        return (
+            <div className="main-div">
+                <BackButton></BackButton>
+            </div>
+        )
     return (
         <div className="main-div">
             <BackButton></BackButton>
