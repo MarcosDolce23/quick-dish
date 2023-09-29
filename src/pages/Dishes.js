@@ -4,14 +4,19 @@ import { useTranslation } from 'react-i18next';
 import DishesList from "../components/DishesList";
 import BackButton from "../components/BackButton";
 
-const IngredientsList = (ingredients) => {
+function IngredientsList({ ingredients, toggleIngredients, l }) {
+
+    const ingredientsList = [];
+
     ingredients.map(item => {
-        return (
+        ingredientsList.push(
             <div key={item._id} className="card-text" onClick={() => toggleIngredients(item)} >{item[l + 'Name']}
                 <div style={{ backgroundImage: "url(images/icons/delete-icon-x.png)" }} className="delete-icon"></div>
             </div>
-        );
+        )
     });
+
+    return ingredientsList;
 }
 
 function Dishes({ ingredients, dishes, selectDish, markAsFavorite, toggleIngredients, resetIngredients }) {
@@ -25,7 +30,7 @@ function Dishes({ ingredients, dishes, selectDish, markAsFavorite, toggleIngredi
             <div className="main-container">
                 <img src="images/icons/delete-icon.svg" alt="delete" className="delete-image" onClick={() => resetIngredients()}></img>
                 <div className="card-dishes">
-                    <IngredientsList ingredients={ingredients} />
+                    <IngredientsList ingredients={ingredients} toggleIngredients={toggleIngredients} l={l} />
                 </div>
                 <DishesList
                     dishes={dishes}
