@@ -4,6 +4,67 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import Loader from '../components/Loader';
 
+const cookTime = [
+    {
+        time: 20,
+        image: "url(images/dishes/test-image-icon.png)"
+    },
+    {
+        time: 30,
+        image: "url(images/dishes/test-image-icon.png)"
+    },
+    {
+        time: 40,
+        image: "url(images/dishes/test-image-icon.png)"
+    }
+];
+
+function TimeCookingRows({ onClickFilterTime, t }) {
+
+    const timeFilters = [];
+
+    cookTime.map((item, i, a) => {
+        timeFilters.push(
+            <Link key={i} to="/search" onClick={() => onClickFilterTime(item.time)} >
+                <div className="filter-button">
+                    <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
+                    {
+                        i === 0 ?
+                            <div className="filter-text">{t('home.lessThan')} {item.time} min</div>
+                            :
+                            i === a.length - 1 ?
+                                <div className="filter-text">{t('home.moreThan')} {item.time} min</div>
+                                :
+                                <div className="filter-text">{t('home.between')} {item.time} min {t('home.and')} {a[i + 1].time} min</div>
+                    }
+                </div>
+            </Link>
+        )
+    });
+
+    return timeFilters;
+};
+
+function VeganDishes({ dishes, onClickVegan, l }) {
+
+    const veganDishes = [];
+
+    dishes.map(dish => {
+        if (!dish.vegan)
+            return;
+        veganDishes.push(
+            <Link key={dish._id} to="/search/dish" onClick={() => onClickVegan(dish)}>
+                <div className="filter-button">
+                    <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
+                    <div className="filter-text">{dish[l + 'Name']}</div>
+                </div>
+            </Link>
+        )
+    });
+
+    return veganDishes;
+};
+
 function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
     const { t, i18n } = useTranslation();
     const l = i18n.resolvedLanguage;
@@ -24,52 +85,6 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
             });
     }, []);
 
-    const cookTime = [
-        {
-            time: 20,
-            image: "url(images/dishes/test-image-icon.png)"
-        },
-        {
-            time: 30,
-            image: "url(images/dishes/test-image-icon.png)"
-        },
-        {
-            time: 40,
-            image: "url(images/dishes/test-image-icon.png)"
-        }
-    ];
-
-    const timeCookingRows = cookTime.map((item, i, a) => {
-        return (
-            <Link key={i} to="/search" onClick={() => onClickFilterTime(item.time)} >
-                <div className="filter-button">
-                    <div className="filter-image" style={{ backgroundImage: "url(images/dishes/test-image-icon.png)" }}></div>
-                    {
-                        i === 0 ?
-                            <div className="filter-text">{t('home.lessThan')} {item.time} min</div>
-                            :
-                            i === a.length - 1 ?
-                                <div className="filter-text">{t('home.moreThan')} {item.time} min</div>
-                                :
-                                <div className="filter-text">{t('home.between')} {item.time} min {t('home.and')} {a[i + 1].time} min</div>
-                    }
-                </div>
-            </Link>
-        );
-    });
-
-    const veganDishes = dishes.map(dish => {
-        if (!dish.vegan)
-            return;
-        return (
-            <Link key={dish._id} to="/search/dish" onClick={() => onClickVegan(dish)}>
-                <div className="filter-button">
-                    <div className="filter-image" style={{ backgroundImage: dish.image }}></div>
-                    <div className="filter-text">{dish[l + 'Name']}</div>
-                </div>
-            </Link>
-        )
-    });
     if (error) {
         return <div>Error</div>
     } else if (!isLoaded) {
@@ -86,12 +101,12 @@ function Home({ dishes, setDishes, onClickFilterTime, onClickVegan }) {
                     <div className="header-filter">{t('home.headerFilter')}</div>
                     <div className="sub-header">{t('home.subHeaderFilter')}</div>
                     <div className="filter-container">
-                        {timeCookingRows}
+                        <TimeCookingRows onClickFilterTime={onClickFilterTime} t={t} />
                     </div>
                     <div className="header-filter">{t('home.vegansTitle')}</div>
                     <div className="sub-header">{t('home.vegansSubTitle')}</div>
                     <div className="filter-container">
-                        {veganDishes}
+                        <VeganDishes dishes={dishes} onClickVegan={onClickVegan} l={l} />
                     </div>
                 </div>
             </div>
