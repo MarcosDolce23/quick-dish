@@ -8,6 +8,7 @@
     "dish": {
         "cookTime": "Estimated processing time",
         "ingredients": "Ingridients",
+        "quantities": "Quantities",
         "steps": "Preparation per portion"
     },
     "dishes": {
