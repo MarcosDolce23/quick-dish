@@ -16,6 +16,23 @@ function Ingredients({ dish, l }) {
     return ingredients;
 }
 
+function Quantities({ dish, l }) {
+
+    const quantities = [];
+
+    dish[l + 'Quantities'].map((item, i) => {
+        quantities.push(
+            <div key={"c" + i} className="div-list">
+                <div key={"c" + i} className="content-list">
+                    <div>{item}</div>
+                </div>
+            </div>
+        )
+    });
+
+    return quantities;
+}
+
 function Steps({ dish, l }) {
 
     const steps = [];
@@ -67,6 +84,11 @@ function Dish({ dish, markAsFavorite }) {
                 <div className="dish-ingredients">{t('dish.ingredients')}</div>
                 <div>
                     <Ingredients dish={dish} l={l} />
+                </div>
+                <hr className="dish-hr"></hr>
+                <div className="dish-ingredients">{t('dish.quantities')}</div>
+                <div style={{ marginTop: "15px" }}>
+                    <Quantities dish={dish} l={l} />
                 </div>
                 <hr className="dish-hr"></hr>
                 <div className="dish-ingredients">{t('dish.steps')}</div>
